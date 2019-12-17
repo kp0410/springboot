@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywjs.mapper.SimeleNodeResultTblMapper">
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.SimeleNodeResultTbl">
+    <constructor>
+      <idArg column="SIMULATIONID_SIM" javaType="java.lang.Integer" jdbcType="DECIMAL" />
+      <idArg column="ELEMENTID_SIMNODERES" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ELEMENTNAME_SIMNODERES" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMPERATURE_SIMNODERES" javaType="java.lang.Integer" jdbcType="DECIMAL" />
+      <arg column="PRESSURE_SIMPIPERES" javaType="java.lang.Integer" jdbcType="DECIMAL" />
+      <arg column="FLOW_REALSIMNODERES" javaType="java.lang.Integer" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    SIMULATIONID_SIM, ELEMENTID_SIMNODERES, ELEMENTNAME_SIMNODERES, TEMPERATURE_SIMNODERES, 
+    PRESSURE_SIMPIPERES, FLOW_REALSIMNODERES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.ywjs.model.entity.SimeleNodeResultTblKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SIMELE_NODE_RESULT_TBL
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+      and ELEMENTID_SIMNODERES = #{elementidSimnoderes,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ywjs.model.entity.SimeleNodeResultTblKey">
+    delete from SIMELE_NODE_RESULT_TBL
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+      and ELEMENTID_SIMNODERES = #{elementidSimnoderes,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.SimeleNodeResultTbl">
+    insert into SIMELE_NODE_RESULT_TBL (SIMULATIONID_SIM, ELEMENTID_SIMNODERES, 
+      ELEMENTNAME_SIMNODERES, TEMPERATURE_SIMNODERES, 
+      PRESSURE_SIMPIPERES, FLOW_REALSIMNODERES)
+    values (#{simulationidSim,jdbcType=DECIMAL}, #{elementidSimnoderes,jdbcType=VARCHAR}, 
+      #{elementnameSimnoderes,jdbcType=VARCHAR}, #{temperatureSimnoderes,jdbcType=DECIMAL}, 
+      #{pressureSimpiperes,jdbcType=DECIMAL}, #{flowRealsimnoderes,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.SimeleNodeResultTbl">
+    insert into SIMELE_NODE_RESULT_TBL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="simulationidSim != null">
+        SIMULATIONID_SIM,
+      </if>
+      <if test="elementidSimnoderes != null">
+        ELEMENTID_SIMNODERES,
+      </if>
+      <if test="elementnameSimnoderes != null">
+        ELEMENTNAME_SIMNODERES,
+      </if>
+      <if test="temperatureSimnoderes != null">
+        TEMPERATURE_SIMNODERES,
+      </if>
+      <if test="pressureSimpiperes != null">
+        PRESSURE_SIMPIPERES,
+      </if>
+      <if test="flowRealsimnoderes != null">
+        FLOW_REALSIMNODERES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="simulationidSim != null">
+        #{simulationidSim,jdbcType=DECIMAL},
+      </if>
+      <if test="elementidSimnoderes != null">
+        #{elementidSimnoderes,jdbcType=VARCHAR},
+      </if>
+      <if test="elementnameSimnoderes != null">
+        #{elementnameSimnoderes,jdbcType=VARCHAR},
+      </if>
+      <if test="temperatureSimnoderes != null">
+        #{temperatureSimnoderes,jdbcType=DECIMAL},
+      </if>
+      <if test="pressureSimpiperes != null">
+        #{pressureSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowRealsimnoderes != null">
+        #{flowRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.SimeleNodeResultTbl">
+    update SIMELE_NODE_RESULT_TBL
+    <set>
+      <if test="elementnameSimnoderes != null">
+        ELEMENTNAME_SIMNODERES = #{elementnameSimnoderes,jdbcType=VARCHAR},
+      </if>
+      <if test="temperatureSimnoderes != null">
+        TEMPERATURE_SIMNODERES = #{temperatureSimnoderes,jdbcType=DECIMAL},
+      </if>
+      <if test="pressureSimpiperes != null">
+        PRESSURE_SIMPIPERES = #{pressureSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowRealsimnoderes != null">
+        FLOW_REALSIMNODERES = #{flowRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+      and ELEMENTID_SIMNODERES = #{elementidSimnoderes,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.SimeleNodeResultTbl">
+    update SIMELE_NODE_RESULT_TBL
+    set ELEMENTNAME_SIMNODERES = #{elementnameSimnoderes,jdbcType=VARCHAR},
+      TEMPERATURE_SIMNODERES = #{temperatureSimnoderes,jdbcType=DECIMAL},
+      PRESSURE_SIMPIPERES = #{pressureSimpiperes,jdbcType=DECIMAL},
+      FLOW_REALSIMNODERES = #{flowRealsimnoderes,jdbcType=DECIMAL}
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+      and ELEMENTID_SIMNODERES = #{elementidSimnoderes,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywjs.mapper.RealtimesimNodeResultTblMapper">
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    <id column="SIMULATIONID_REALSIMALL" property="simulationidRealsimall" jdbcType="DECIMAL" />
+    <id column="ELEMENTNAME_REALSIMNODERES" property="elementnameRealsimnoderes" jdbcType="VARCHAR" />
+    <result column="ELEMENTID_REALSIMNODERES" property="elementidRealsimnoderes" jdbcType="VARCHAR" />
+    <result column="TEMPERATURE_REALSIMNODERES" property="temperatureRealsimnoderes" jdbcType="DECIMAL" />
+    <result column="PRESSURE_REALSIMNODERES" property="pressureRealsimnoderes" jdbcType="DECIMAL" />
+    <result column="FLOW_REALSIMNODERES" property="flowRealsimnoderes" jdbcType="DECIMAL" />
+    <!--<constructor>-->
+      <!--<idArg column="SIMULATIONID_REALSIMALL" javaType="java.lang.Integer" jdbcType="DECIMAL" />-->
+      <!--<idArg column="ELEMENTNAME_REALSIMNODERES" javaType="java.lang.String" jdbcType="VARCHAR" />-->
+      <!--<arg column="ELEMENTID_REALSIMNODERES" javaType="java.lang.String" jdbcType="VARCHAR" />-->
+      <!--<arg column="TEMPERATURE_REALSIMNODERES" javaType="java.lang.Integer" jdbcType="DECIMAL" />-->
+      <!--<arg column="PRESSURE_REALSIMNODERES" javaType="java.lang.Integer" jdbcType="DECIMAL" />-->
+      <!--<arg column="FLOW_REALSIMNODERES" javaType="java.lang.Integer" jdbcType="DECIMAL" />-->
+    <!--</constructor>-->
+  </resultMap>
+  <sql id="Base_Column_List">
+    SIMULATIONID_REALSIMALL, ELEMENTNAME_REALSIMNODERES, ELEMENTID_REALSIMNODERES, TEMPERATURE_REALSIMNODERES, 
+    PRESSURE_REALSIMNODERES, FLOW_REALSIMNODERES
+  </sql>
+
+  <delete id="deleteAll">
+    delete from REALTIMESIM_NODE_RESULT_TBL
+  </delete>
+
+  <select id="selectByPrimaryKey" parameterType="com.ywjs.model.entity.RealtimesimNodeResultTblKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REALTIMESIM_NODE_RESULT_TBL
+    where SIMULATIONID_REALSIMALL = #{simulationidRealsimall,jdbcType=DECIMAL}
+      and ELEMENTNAME_REALSIMNODERES = #{elementnameRealsimnoderes,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" resultType="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    select TEMPERATURE_REALSIMNODERES,PRESSURE_REALSIMNODERES,FLOW_REALSIMNODERES,ELEMENTID_REALSIMNODERES
+    FROM REALTIMESIM_NODE_RESULT_TBL WHERE SIMULATIONID_REALSIMALL=#{simulationid} AND ELEMENTNAME_REALSIMNODERES=#{elementname}
+    ORDER BY SIMULATIONID_REALSIMALL
+  </select>
+  <select id="selectSimulationidEndTen" resultType="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    select * from
+    (select distinct SIMULATIONID_REALSIMALL from REALTIMESIM_NODE_RESULT_TBL order by SIMULATIONID_REALSIMALL desc)
+    where rownum &lt; 11
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ywjs.model.entity.RealtimesimNodeResultTblKey">
+    delete from REALTIMESIM_NODE_RESULT_TBL
+    where SIMULATIONID_REALSIMALL = #{simulationidRealsimall,jdbcType=DECIMAL}
+      and ELEMENTNAME_REALSIMNODERES = #{elementnameRealsimnoderes,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    insert into REALTIMESIM_NODE_RESULT_TBL (SIMULATIONID_REALSIMALL, ELEMENTNAME_REALSIMNODERES, 
+      ELEMENTID_REALSIMNODERES, TEMPERATURE_REALSIMNODERES, 
+      PRESSURE_REALSIMNODERES, FLOW_REALSIMNODERES
+      )
+    values (#{simulationidRealsimall,jdbcType=DECIMAL}, #{elementnameRealsimnoderes,jdbcType=VARCHAR}, 
+      #{elementidRealsimnoderes,jdbcType=VARCHAR}, #{temperatureRealsimnoderes,jdbcType=DECIMAL}, 
+      #{pressureRealsimnoderes,jdbcType=DECIMAL}, #{flowRealsimnoderes,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    insert into REALTIMESIM_NODE_RESULT_TBL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="simulationidRealsimall != null">
+        SIMULATIONID_REALSIMALL,
+      </if>
+      <if test="elementnameRealsimnoderes != null">
+        ELEMENTNAME_REALSIMNODERES,
+      </if>
+      <if test="elementidRealsimnoderes != null">
+        ELEMENTID_REALSIMNODERES,
+      </if>
+      <if test="temperatureRealsimnoderes != null">
+        TEMPERATURE_REALSIMNODERES,
+      </if>
+      <if test="pressureRealsimnoderes != null">
+        PRESSURE_REALSIMNODERES,
+      </if>
+      <if test="flowRealsimnoderes != null">
+        FLOW_REALSIMNODERES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="simulationidRealsimall != null">
+        #{simulationidRealsimall,jdbcType=DECIMAL},
+      </if>
+      <if test="elementnameRealsimnoderes != null">
+        #{elementnameRealsimnoderes,jdbcType=VARCHAR},
+      </if>
+      <if test="elementidRealsimnoderes != null">
+        #{elementidRealsimnoderes,jdbcType=VARCHAR},
+      </if>
+      <if test="temperatureRealsimnoderes != null">
+        #{temperatureRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+      <if test="pressureRealsimnoderes != null">
+        #{pressureRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowRealsimnoderes != null">
+        #{flowRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    update REALTIMESIM_NODE_RESULT_TBL
+    <set>
+      <if test="elementidRealsimnoderes != null">
+        ELEMENTID_REALSIMNODERES = #{elementidRealsimnoderes,jdbcType=VARCHAR},
+      </if>
+      <if test="temperatureRealsimnoderes != null">
+        TEMPERATURE_REALSIMNODERES = #{temperatureRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+      <if test="pressureRealsimnoderes != null">
+        PRESSURE_REALSIMNODERES = #{pressureRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowRealsimnoderes != null">
+        FLOW_REALSIMNODERES = #{flowRealsimnoderes,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where SIMULATIONID_REALSIMALL = #{simulationidRealsimall,jdbcType=DECIMAL}
+      and ELEMENTNAME_REALSIMNODERES = #{elementnameRealsimnoderes,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.RealtimesimNodeResultTbl">
+    update REALTIMESIM_NODE_RESULT_TBL
+    set ELEMENTID_REALSIMNODERES = #{elementidRealsimnoderes,jdbcType=VARCHAR},
+      TEMPERATURE_REALSIMNODERES = #{temperatureRealsimnoderes,jdbcType=DECIMAL},
+      PRESSURE_REALSIMNODERES = #{pressureRealsimnoderes,jdbcType=DECIMAL},
+      FLOW_REALSIMNODERES = #{flowRealsimnoderes,jdbcType=DECIMAL}
+    where SIMULATIONID_REALSIMALL = #{simulationidRealsimall,jdbcType=DECIMAL}
+      and ELEMENTNAME_REALSIMNODERES = #{elementnameRealsimnoderes,jdbcType=VARCHAR}
+  </update>
+</mapper>

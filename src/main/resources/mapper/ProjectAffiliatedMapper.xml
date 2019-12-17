@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.ProjectAffiliatedMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.ProjectAffiliated" >
+    <id column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="DECIMAL" />
+    <result column="PROJECTID_PRO" property="projectidPro" jdbcType="DECIMAL" />
+    <result column="CREATEDATE_PROAFF" property="createdateProaff" jdbcType="TIMESTAMP" />
+    <result column="PROUSERNAME_PROAFF" property="prousernameProaff" jdbcType="VARCHAR" />
+    <result column="REMARK_PROAFF" property="remarkProaff" jdbcType="VARCHAR" />
+    <result column="ISSAVE_PROAFF" property="issaveProaff" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROJECTID_PROAFF, PROJECTID_PRO, CREATEDATE_PROAFF, PROUSERNAME_PROAFF, REMARK_PROAFF,  ISSAVE_PROAFF
+  </sql>
+
+  <select id="selectAllToProjectAff" resultType="com.ywjs.model.vo.ProjectaffVO">
+        select PROJECTID_PROAFF as projectaffid,PROJECTID_PRO as projectid from PROJECT_AFFILIATED_TBL
+        ORDER BY PROJECTID_PROAFF desc
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.ProjectAffiliatedExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PROJECT_AFFILIATED_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from PROJECT_AFFILIATED_TBL
+    where PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL}
+  </select>
+  
+  <!--手动添加sql  -->
+  <select id="selectMaxKey" resultType="java.lang.Long">
+    SELECT max(PROJECTID_PROAFF) FROM PROJECT_AFFILIATED_TBL
+  </select>
+  
+  <!--手动添加sql:查询最后一条记录  -->
+  <select id="selectReverse" resultType="com.ywjs.model.entity.ProjectAffiliated"  parameterType="java.lang.Long">
+	SELECT
+	<include refid="Base_Column_List" />
+	FROM
+		PROJECT_AFFILIATED_TBL
+	WHERE
+		PROJECTID_PROAFF = (
+			SELECT MAX(PROJECTID_PROAFF) FROM PROJECT_AFFILIATED_TBL
+			WHERE PROJECTID_PRO = #{0}
+			)
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Tue Nov 12 16:45:18 CST 2019.
+    -->
+    delete from PROJECT_AFFILIATED_TBL
+    where PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.ProjectAffiliatedExample" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Tue Nov 12 16:45:18 CST 2019.
+    -->
+    delete from PROJECT_AFFILIATED_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.ProjectAffiliated" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="projectidProaff">
+     	<!-- select PROJECT_AFFILIATED_TBL_SEQ.nextval  from dual -->
+     	select max(PROJECTID_PROAFF) from PROJECT_AFFILIATED_TBL
+    </selectKey>
+    insert into PROJECT_AFFILIATED_TBL (PROJECTID_PROAFF, PROJECTID_PRO, CREATEDATE_PROAFF, 
+      PROUSERNAME_PROAFF, REMARK_PROAFF, ISSAVE_PROAFF
+      )
+    values (#{projectidProaff,jdbcType=DECIMAL}, #{projectidPro,jdbcType=DECIMAL}, #{createdateProaff,jdbcType=TIMESTAMP}, 
+      #{prousernameProaff,jdbcType=VARCHAR}, #{remarkProaff,jdbcType=VARCHAR}, #{issaveProaff,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.ProjectAffiliated" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="projectidProaff">
+     	<!-- select PROJECT_AFFILIATED_TBL_SEQ.nextval  from dual -->
+     	select max(PROJECTID_PROAFF) from PROJECT_AFFILIATED_TBL
+    </selectKey>
+    insert into PROJECT_AFFILIATED_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF,
+      </if>
+      <if test="projectidPro != null" >
+        PROJECTID_PRO,
+      </if>
+      <if test="createdateProaff != null" >
+        CREATEDATE_PROAFF,
+      </if>
+      <if test="prousernameProaff != null" >
+        PROUSERNAME_PROAFF,
+      </if>
+      <if test="remarkProaff != null" >
+        REMARK_PROAFF,
+      </if>
+      <if test="issaveProaff != null" >
+        ISSAVE_PROAFF,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectidProaff != null" >
+        #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="projectidPro != null" >
+        #{projectidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="createdateProaff != null" >
+        #{createdateProaff,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prousernameProaff != null" >
+        #{prousernameProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkProaff != null" >
+        #{remarkProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="issaveProaff != null" >
+        #{issaveProaff,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.ProjectAffiliatedExample" resultType="java.lang.Integer" >
+    select count(*) from PROJECT_AFFILIATED_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PROJECT_AFFILIATED_TBL
+    <set >
+      <if test="record.projectidProaff != null" >
+        PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.projectidPro != null" >
+        PROJECTID_PRO = #{record.projectidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createdateProaff != null" >
+        CREATEDATE_PROAFF = #{record.createdateProaff,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prousernameProaff != null" >
+        PROUSERNAME_PROAFF = #{record.prousernameProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarkProaff != null" >
+        REMARK_PROAFF = #{record.remarkProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issaveProaff != null" >
+        ISSAVE_PROAFF = #{record.issaveProaff,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PROJECT_AFFILIATED_TBL
+    set PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      PROJECTID_PRO = #{record.projectidPro,jdbcType=DECIMAL},
+      CREATEDATE_PROAFF = #{record.createdateProaff,jdbcType=TIMESTAMP},
+      PROUSERNAME_PROAFF = #{record.prousernameProaff,jdbcType=VARCHAR},
+      REMARK_PROAFF = #{record.remarkProaff,jdbcType=VARCHAR},
+      ISSAVE_PROAFF = #{record.issaveProaff,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.ProjectAffiliated" >
+    update PROJECT_AFFILIATED_TBL
+    <set >
+      <if test="projectidPro != null" >
+        PROJECTID_PRO = #{projectidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="createdateProaff != null" >
+        CREATEDATE_PROAFF = #{createdateProaff,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prousernameProaff != null" >
+        PROUSERNAME_PROAFF = #{prousernameProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkProaff != null" >
+        REMARK_PROAFF = #{remarkProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="issaveProaff != null" >
+        ISSAVE_PROAFF = #{issaveProaff,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.ProjectAffiliated" >
+    update PROJECT_AFFILIATED_TBL
+    set PROJECTID_PRO = #{projectidPro,jdbcType=DECIMAL},
+      CREATEDATE_PROAFF = #{createdateProaff,jdbcType=TIMESTAMP},
+      PROUSERNAME_PROAFF = #{prousernameProaff,jdbcType=VARCHAR},
+      REMARK_PROAFF = #{remarkProaff,jdbcType=VARCHAR},
+      ISSAVE_PROAFF = #{issaveProaff,jdbcType=DECIMAL}
+    where PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL}
+  </update>
+</mapper>

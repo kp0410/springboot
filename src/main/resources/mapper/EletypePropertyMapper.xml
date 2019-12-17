@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.EletypePropertyMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.EletypeProperty" >
+    <id column="ELEPROID_ELEPRO" property="eleproidElepro" jdbcType="DECIMAL" />
+    <result column="PROPERTYID_PRO" property="propertyidPro" jdbcType="DECIMAL" />
+    <result column="ELETYPE_ELEPRO" property="eletypeElepro" jdbcType="VARCHAR" />
+    <result column="ELETYPE_NUMBER_ELEPRO" property="eletypeNumberElepro" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ELEPROID_ELEPRO, PROPERTYID_PRO, ELETYPE_ELEPRO, ELETYPE_NUMBER_ELEPRO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.EletypePropertyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ELETYPE_PROPERTY_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ELETYPE_PROPERTY_TBL
+    where ELEPROID_ELEPRO = #{eleproidElepro,jdbcType=DECIMAL}
+  </select>
+  
+  <!-- 手动添加sql -->
+  <select id="selectAll" resultMap="BaseResultMap" resultType="com.ywjs.model.entity.EletypeProperty">
+    select 
+    <include refid="Base_Column_List" />
+    from ELETYPE_PROPERTY_TBL
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ELETYPE_PROPERTY_TBL
+    where ELEPROID_ELEPRO = #{eleproidElepro,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.EletypePropertyExample" >
+    delete from ELETYPE_PROPERTY_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.EletypeProperty" >
+    <selectKey resultType="Integer" order="AFTER" keyProperty="eleproidElepro">
+     	<!-- select ELETYPE_PROPERTY_TBL_SEQ.nextval  from dual -->
+     	select max(eleproidElepro) from ELETYPE_PROPERTY_TBL
+    </selectKey>
+    insert into ELETYPE_PROPERTY_TBL (ELEPROID_ELEPRO, PROPERTYID_PRO, ELETYPE_ELEPRO, 
+      ELETYPE_NUMBER_ELEPRO)
+    values (#{eleproidElepro,jdbcType=DECIMAL}, #{propertyidPro,jdbcType=DECIMAL}, #{eletypeElepro,jdbcType=VARCHAR}, 
+      #{eletypeNumberElepro,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.EletypeProperty" >
+    <selectKey resultType="Integer" order="AFTER" keyProperty="eleproidElepro">
+     	<!-- select ELETYPE_PROPERTY_TBL_SEQ.nextval  from dual -->
+     	select max(eleproidElepro) from ELETYPE_PROPERTY_TBL
+    </selectKey>
+    insert into ELETYPE_PROPERTY_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eleproidElepro != null" >
+        ELEPROID_ELEPRO,
+      </if>
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO,
+      </if>
+      <if test="eletypeElepro != null" >
+        ELETYPE_ELEPRO,
+      </if>
+      <if test="eletypeNumberElepro != null" >
+        ELETYPE_NUMBER_ELEPRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eleproidElepro != null" >
+        #{eleproidElepro,jdbcType=DECIMAL},
+      </if>
+      <if test="propertyidPro != null" >
+        #{propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="eletypeElepro != null" >
+        #{eletypeElepro,jdbcType=VARCHAR},
+      </if>
+      <if test="eletypeNumberElepro != null" >
+        #{eletypeNumberElepro,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.EletypePropertyExample" resultType="java.lang.Integer" >
+    select count(*) from ELETYPE_PROPERTY_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ELETYPE_PROPERTY_TBL
+    <set >
+      <if test="record.eleproidElepro != null" >
+        ELEPROID_ELEPRO = #{record.eleproidElepro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.propertyidPro != null" >
+        PROPERTYID_PRO = #{record.propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.eletypeElepro != null" >
+        ELETYPE_ELEPRO = #{record.eletypeElepro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eletypeNumberElepro != null" >
+        ELETYPE_NUMBER_ELEPRO = #{record.eletypeNumberElepro,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ELETYPE_PROPERTY_TBL
+    set ELEPROID_ELEPRO = #{record.eleproidElepro,jdbcType=DECIMAL},
+      PROPERTYID_PRO = #{record.propertyidPro,jdbcType=DECIMAL},
+      ELETYPE_ELEPRO = #{record.eletypeElepro,jdbcType=VARCHAR},
+      ELETYPE_NUMBER_ELEPRO = #{record.eletypeNumberElepro,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.EletypeProperty" >
+    update ELETYPE_PROPERTY_TBL
+    <set >
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="eletypeElepro != null" >
+        ELETYPE_ELEPRO = #{eletypeElepro,jdbcType=VARCHAR},
+      </if>
+      <if test="eletypeNumberElepro != null" >
+        ELETYPE_NUMBER_ELEPRO = #{eletypeNumberElepro,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ELEPROID_ELEPRO = #{eleproidElepro,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.EletypeProperty" >
+    update ELETYPE_PROPERTY_TBL
+    set PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL},
+      ELETYPE_ELEPRO = #{eletypeElepro,jdbcType=VARCHAR},
+      ELETYPE_NUMBER_ELEPRO = #{eletypeNumberElepro,jdbcType=DECIMAL}
+    where ELEPROID_ELEPRO = #{eleproidElepro,jdbcType=DECIMAL}
+  </update>
+</mapper>

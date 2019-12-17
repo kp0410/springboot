@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywjs.mapper.BingParamarterDao">
+    <resultMap type="com.ywjs.model.entity.BingParamarter" id="bingparamarter">
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="filename" column="filename" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="issum" column="issum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--保存-->
+    <insert id="save" parameterType="com.ywjs.model.entity.BingParamarter">
+		INSERT INTO bingparamarter(name,filename,type,issum)
+		VALUES(#{name},#{filename},#{type},#{issum})
+	</insert>
+
+    <!--查询单个记录-->
+    <select id="getByStrPro" parameterType="java.lang.String" resultType="com.ywjs.model.entity.BingParamarter">
+        select b.name,b.filename,b.type,b.issum from bingparamarter b where name=#{name}
+    </select>
+
+    <!--查询所有记录-->
+    <select id="loadAll" parameterType="com.ywjs.model.entity.BingParamarter" resultType="map">
+        select b.name,b.filename,b.type,b.issum from bingparamarter b
+    </select>
+
+    <!--修改-->
+    <update id="update" parameterType="com.ywjs.model.entity.BingParamarter">
+		UPDATE bingparamarter SET name=#{name},filename=#{filename},type=#{type},issum=#{issum}
+		WHERE name=#{name}
+	</update>
+
+    <!--统计-->
+    <select id="count" parameterType="com.ywjs.model.query.QueryBingParamarter" resultType="java.lang.Integer">
+        SELECT count(*) FROM bingparamarter b WHERE 1=1
+        <if test="name!=null and name!='' ">
+            AND b.name=#{name}
+        </if>
+        <if test="filename!=null and filename!='' ">
+            AND b.filename=#{filename}
+        </if>
+        <if test="type!=null and type!='' ">
+            AND b.type=#{type}
+        </if>
+        <if test="issum!=null and issum!='' ">
+            AND b.issum=#{issum}
+        </if>
+        <if test="sort!= null and sort!='' ">
+            order by ${sort} ${order}
+        </if>
+    </select>
+
+    <!--分页查询-->
+    <select id="findByPage" parameterType="com.ywjs.model.query.QueryBingParamarter" resultMap="bingparamarter">
+        select  b.name,b.filename,b.type,b.issum from (select i.*, ROWNUM rn from ( select * from BINGPARAMARTER ) i where ROWNUM &lt; #{page}*#{limit}) b where rn &gt;= (#{page}-1)*#{limit}
+        <if test="name!=null and name!='' ">
+            AND b.name=#{name}
+        </if>
+        <if test="filename!=null and filename!='' ">
+            AND b.filename=#{filename}
+        </if>
+        <if test="type!=null and type!='' ">
+            AND b.type=#{type}
+        </if>
+        <if test="issum!=null and issum!='' ">
+            AND b.issum=#{issum}
+        </if>
+        <if test="sort!= null and sort!='' ">
+            order by ${sort} ${order}
+        </if>
+    </select>
+
+</mapper>

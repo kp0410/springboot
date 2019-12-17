@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.OperationMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.Operation" >
+    <id column="OPERAID_OPERA" property="operaidOpera" jdbcType="DECIMAL" />
+    <result column="OPERANAME_OPERA" property="operanameOpera" jdbcType="VARCHAR" />
+    <result column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="DECIMAL" />
+    <result column="OPERAUSERNAME_OPERA" property="operausernameOpera" jdbcType="VARCHAR" />
+    <result column="CREATEDATE_SIM" property="createdateSim" jdbcType="TIMESTAMP" />
+    <result column="REMARK_OPERA" property="remarkOpera" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OPERAID_OPERA, OPERANAME_OPERA, PROJECTID_PROAFF, OPERAUSERNAME_OPERA, CREATEDATE_SIM, 
+    REMARK_OPERA
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.OperationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from OPERATION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from OPERATION_TBL
+    where OPERAID_OPERA = #{operaidOpera,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from OPERATION_TBL
+    where OPERAID_OPERA = #{operaidOpera,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.OperationExample" >
+    delete from OPERATION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.Operation" >
+    insert into OPERATION_TBL (OPERAID_OPERA, OPERANAME_OPERA, PROJECTID_PROAFF, 
+      OPERAUSERNAME_OPERA, CREATEDATE_SIM, REMARK_OPERA
+      )
+    values (#{operaidOpera,jdbcType=DECIMAL}, #{operanameOpera,jdbcType=VARCHAR}, #{projectidProaff,jdbcType=DECIMAL}, 
+      #{operausernameOpera,jdbcType=VARCHAR}, #{createdateSim,jdbcType=TIMESTAMP}, #{remarkOpera,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.Operation" >
+    insert into OPERATION_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operaidOpera != null" >
+        OPERAID_OPERA,
+      </if>
+      <if test="operanameOpera != null" >
+        OPERANAME_OPERA,
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF,
+      </if>
+      <if test="operausernameOpera != null" >
+        OPERAUSERNAME_OPERA,
+      </if>
+      <if test="createdateSim != null" >
+        CREATEDATE_SIM,
+      </if>
+      <if test="remarkOpera != null" >
+        REMARK_OPERA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operaidOpera != null" >
+        #{operaidOpera,jdbcType=DECIMAL},
+      </if>
+      <if test="operanameOpera != null" >
+        #{operanameOpera,jdbcType=VARCHAR},
+      </if>
+      <if test="projectidProaff != null" >
+        #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="operausernameOpera != null" >
+        #{operausernameOpera,jdbcType=VARCHAR},
+      </if>
+      <if test="createdateSim != null" >
+        #{createdateSim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkOpera != null" >
+        #{remarkOpera,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.OperationExample" resultType="java.lang.Integer" >
+    select count(*) from OPERATION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update OPERATION_TBL
+    <set >
+      <if test="record.operaidOpera != null" >
+        OPERAID_OPERA = #{record.operaidOpera,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operanameOpera != null" >
+        OPERANAME_OPERA = #{record.operanameOpera,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectidProaff != null" >
+        PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operausernameOpera != null" >
+        OPERAUSERNAME_OPERA = #{record.operausernameOpera,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdateSim != null" >
+        CREATEDATE_SIM = #{record.createdateSim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remarkOpera != null" >
+        REMARK_OPERA = #{record.remarkOpera,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update OPERATION_TBL
+    set OPERAID_OPERA = #{record.operaidOpera,jdbcType=DECIMAL},
+      OPERANAME_OPERA = #{record.operanameOpera,jdbcType=VARCHAR},
+      PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      OPERAUSERNAME_OPERA = #{record.operausernameOpera,jdbcType=VARCHAR},
+      CREATEDATE_SIM = #{record.createdateSim,jdbcType=TIMESTAMP},
+      REMARK_OPERA = #{record.remarkOpera,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.Operation" >
+    update OPERATION_TBL
+    <set >
+      <if test="operanameOpera != null" >
+        OPERANAME_OPERA = #{operanameOpera,jdbcType=VARCHAR},
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="operausernameOpera != null" >
+        OPERAUSERNAME_OPERA = #{operausernameOpera,jdbcType=VARCHAR},
+      </if>
+      <if test="createdateSim != null" >
+        CREATEDATE_SIM = #{createdateSim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkOpera != null" >
+        REMARK_OPERA = #{remarkOpera,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPERAID_OPERA = #{operaidOpera,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.Operation" >
+    update OPERATION_TBL
+    set OPERANAME_OPERA = #{operanameOpera,jdbcType=VARCHAR},
+      PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      OPERAUSERNAME_OPERA = #{operausernameOpera,jdbcType=VARCHAR},
+      CREATEDATE_SIM = #{createdateSim,jdbcType=TIMESTAMP},
+      REMARK_OPERA = #{remarkOpera,jdbcType=VARCHAR}
+    where OPERAID_OPERA = #{operaidOpera,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.PropertyMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.Property" >
+    <id column="PROPERTYID_PRO" property="id" jdbcType="DECIMAL" />
+    <result column="PROPERTYCNNAME_PRO" property="title" jdbcType="VARCHAR" />
+    <result column="PROPERTYNAME_PRO" property="name" jdbcType="VARCHAR" />
+    <result column="PROPERTYUNIT_PRO" property="unit" jdbcType="VARCHAR" />
+    <result column="PRODEFVAL_PRO" property="value" jdbcType="VARCHAR" />
+    <result column="REMARK_PRO" property="remarkPro" jdbcType="VARCHAR" />
+    <result column="EDITABLE_PRO" property="editable" jdbcType="DECIMAL" />
+    <result column="OPENDILAOG_PRO" property="opendilaog" jdbcType="DECIMAL" />
+    <result column="SHOW_PRO" property="show" jdbcType="DECIMAL" />
+    <result column="ARCMODE_PRO" property="arcMode" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROPERTYID_PRO, PROPERTYCNNAME_PRO, PROPERTYNAME_PRO, PROPERTYUNIT_PRO, PRODEFVAL_PRO, 
+    REMARK_PRO, EDITABLE_PRO, OPENDILAOG_PRO, SHOW_PRO,ARCMODE_PRO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.PropertyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PROPERTY_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PROPERTY_TBL
+    where PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL}
+  </select>
+  
+  <!-- 手动添加sql -->
+  <select id="selectAll" resultMap="BaseResultMap" resultType="com.ywjs.model.entity.Property" >
+    select 
+	<include refid="Base_Column_List" />
+    from PROPERTY_TBL
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PROPERTY_TBL
+    where PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.PropertyExample" >
+    delete from PROPERTY_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.Property" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="id">
+     	<!-- select PROPERTY_TBL_SEQ.nextval  from dual -->
+     	select max(PROPERTYID_PRO) from PROPERTY_TBL
+    </selectKey>
+    insert into PROPERTY_TBL (PROPERTYID_PRO, PROPERTYCNNAME_PRO, 
+      PROPERTYNAME_PRO, PROPERTYUNIT_PRO, PRODEFVAL_PRO, 
+      REMARK_PRO, EDITABLE_PRO, OPENDILAOG_PRO, 
+      SHOW_PRO)
+    values (#{propertyidPro,jdbcType=DECIMAL}, #{propertycnnamePro,jdbcType=VARCHAR}, 
+      #{propertynamePro,jdbcType=VARCHAR}, #{propertyunitPro,jdbcType=VARCHAR}, #{prodefvalPro,jdbcType=VARCHAR}, 
+      #{remarkPro,jdbcType=VARCHAR}, #{editablePro,jdbcType=DECIMAL}, #{opendilaogPro,jdbcType=DECIMAL}, 
+      #{showPro,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.Property" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="id">
+     	select max(PROPERTYID_PRO) from PROPERTY_TBL
+    </selectKey>
+    insert into PROPERTY_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO,
+      </if>
+      <if test="propertycnnamePro != null" >
+        PROPERTYCNNAME_PRO,
+      </if>
+      <if test="propertynamePro != null" >
+        PROPERTYNAME_PRO,
+      </if>
+      <if test="propertyunitPro != null" >
+        PROPERTYUNIT_PRO,
+      </if>
+      <if test="prodefvalPro != null" >
+        PRODEFVAL_PRO,
+      </if>
+      <if test="remarkPro != null" >
+        REMARK_PRO,
+      </if>
+      <if test="editablePro != null" >
+        EDITABLE_PRO,
+      </if>
+      <if test="opendilaogPro != null" >
+        OPENDILAOG_PRO,
+      </if>
+      <if test="showPro != null" >
+        SHOW_PRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="propertyidPro != null" >
+        #{propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="propertycnnamePro != null" >
+        #{propertycnnamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="propertynamePro != null" >
+        #{propertynamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyunitPro != null" >
+        #{propertyunitPro,jdbcType=VARCHAR},
+      </if>
+      <if test="prodefvalPro != null" >
+        #{prodefvalPro,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkPro != null" >
+        #{remarkPro,jdbcType=VARCHAR},
+      </if>
+      <if test="editablePro != null" >
+        #{editablePro,jdbcType=DECIMAL},
+      </if>
+      <if test="opendilaogPro != null" >
+        #{opendilaogPro,jdbcType=DECIMAL},
+      </if>
+      <if test="showPro != null" >
+        #{showPro,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.PropertyExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 14:08:31 CST 2019.
+    -->
+    select count(*) from PROPERTY_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 14:08:31 CST 2019.
+    -->
+    update PROPERTY_TBL
+    <set >
+      <if test="record.propertyidPro != null" >
+        PROPERTYID_PRO = #{record.propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.propertycnnamePro != null" >
+        PROPERTYCNNAME_PRO = #{record.propertycnnamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertynamePro != null" >
+        PROPERTYNAME_PRO = #{record.propertynamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyunitPro != null" >
+        PROPERTYUNIT_PRO = #{record.propertyunitPro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodefvalPro != null" >
+        PRODEFVAL_PRO = #{record.prodefvalPro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarkPro != null" >
+        REMARK_PRO = #{record.remarkPro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editablePro != null" >
+        EDITABLE_PRO = #{record.editablePro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.opendilaogPro != null" >
+        OPENDILAOG_PRO = #{record.opendilaogPro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.showPro != null" >
+        SHOW_PRO = #{record.showPro,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 14:08:31 CST 2019.
+    -->
+    update PROPERTY_TBL
+    set PROPERTYID_PRO = #{record.propertyidPro,jdbcType=DECIMAL},
+      PROPERTYCNNAME_PRO = #{record.propertycnnamePro,jdbcType=VARCHAR},
+      PROPERTYNAME_PRO = #{record.propertynamePro,jdbcType=VARCHAR},
+      PROPERTYUNIT_PRO = #{record.propertyunitPro,jdbcType=VARCHAR},
+      PRODEFVAL_PRO = #{record.prodefvalPro,jdbcType=VARCHAR},
+      REMARK_PRO = #{record.remarkPro,jdbcType=VARCHAR},
+      EDITABLE_PRO = #{record.editablePro,jdbcType=DECIMAL},
+      OPENDILAOG_PRO = #{record.opendilaogPro,jdbcType=DECIMAL},
+      SHOW_PRO = #{record.showPro,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.Property" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 14:08:31 CST 2019.
+    -->
+    update PROPERTY_TBL
+    <set >
+      <if test="propertycnnamePro != null" >
+        PROPERTYCNNAME_PRO = #{propertycnnamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="propertynamePro != null" >
+        PROPERTYNAME_PRO = #{propertynamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyunitPro != null" >
+        PROPERTYUNIT_PRO = #{propertyunitPro,jdbcType=VARCHAR},
+      </if>
+      <if test="prodefvalPro != null" >
+        PRODEFVAL_PRO = #{prodefvalPro,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkPro != null" >
+        REMARK_PRO = #{remarkPro,jdbcType=VARCHAR},
+      </if>
+      <if test="editablePro != null" >
+        EDITABLE_PRO = #{editablePro,jdbcType=DECIMAL},
+      </if>
+      <if test="opendilaogPro != null" >
+        OPENDILAOG_PRO = #{opendilaogPro,jdbcType=DECIMAL},
+      </if>
+      <if test="showPro != null" >
+        SHOW_PRO = #{showPro,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.Property" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 14:08:31 CST 2019.
+    -->
+    update PROPERTY_TBL
+    set PROPERTYCNNAME_PRO = #{propertycnnamePro,jdbcType=VARCHAR},
+      PROPERTYNAME_PRO = #{propertynamePro,jdbcType=VARCHAR},
+      PROPERTYUNIT_PRO = #{propertyunitPro,jdbcType=VARCHAR},
+      PRODEFVAL_PRO = #{prodefvalPro,jdbcType=VARCHAR},
+      REMARK_PRO = #{remarkPro,jdbcType=VARCHAR},
+      EDITABLE_PRO = #{editablePro,jdbcType=DECIMAL},
+      OPENDILAOG_PRO = #{opendilaogPro,jdbcType=DECIMAL},
+      SHOW_PRO = #{showPro,jdbcType=DECIMAL}
+    where PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL}
+  </update>
+</mapper>

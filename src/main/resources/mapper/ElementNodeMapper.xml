@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.ElementNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.ElementNode" >
+    <id column="NODEID_NDL" property="nodeidNdl" jdbcType="DECIMAL" />
+    <result column="NODEX_NDL" property="nodexNdl" jdbcType="DECIMAL" />
+    <result column="NODEY_NDL" property="nodeyNdl" jdbcType="DECIMAL" />
+    <result column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="DECIMAL" />
+    <result column="LAYERID_ELE" property="layeridEle" jdbcType="VARCHAR" />
+    <result column="NODENUM_NDL" property="nodenumNdl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    NODEID_NDL, NODEX_NDL, NODEY_NDL, PROJECTID_PROAFF, LAYERID_ELE, NODENUM_NDL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.ElementNodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ELEMENT_NODE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ELEMENT_NODE_TBL
+    where NODEID_NDL = #{nodeidNdl,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ELEMENT_NODE_TBL
+    where NODEID_NDL = #{nodeidNdl,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.ElementNodeExample" >
+    delete from ELEMENT_NODE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.ElementNode" >
+    <selectKey resultType="Integer" order="AFTER" keyProperty="nodeidNdl">
+     	<!-- select ELEMENT_NODE_TBL_SEQ.nextval  from dual -->
+     	select max(NODEID_NDL) from
+    </selectKey>
+    insert into ELEMENT_NODE_TBL (NODEID_NDL, NODEX_NDL, NODEY_NDL, 
+      PROJECTID_PROAFF, LAYERID_ELE)
+    values (#{nodeidNdl,jdbcType=DECIMAL}, #{nodexNdl,jdbcType=DECIMAL}, #{nodeyNdl,jdbcType=DECIMAL}, 
+      #{projectidProaff,jdbcType=DECIMAL}, #{layeridEle,jdbcType=DECIMAL})
+  </insert>
+
+	<!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="java.util.List" >
+		insert into ELEMENT_NODE_TBL
+		(NODEID_NDL, NODEX_NDL, NODEY_NDL, PROJECTID_PROAFF, LAYERID_ELE,NODENUM_NDL)
+		<foreach close=")" collection="list" item="item" index="index"
+			open="(" separator="union all">
+			select
+			#{item.nodeidNdl,jdbcType=DECIMAL},
+			#{item.nodexNdl,jdbcType=DECIMAL},
+			#{item.nodeyNdl,jdbcType=DECIMAL},
+			#{item.projectidProaff,jdbcType=DECIMAL}, 
+			#{item.layeridEle,jdbcType=DECIMAL},
+			#{item.nodenumNdl,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+  
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.ElementNode" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 18:21:09 CST 2019.
+    -->
+    <selectKey resultType="Integer" order="AFTER" keyProperty="nodeidNdl">
+     	<!-- select ELEMENT_NODE_TBL_SEQ.nextval  from dual -->
+     	select max(NODEID_NDL) from
+    </selectKey>
+    insert into ELEMENT_NODE_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodeidNdl != null" >
+        NODEID_NDL,
+      </if>
+      <if test="nodexNdl != null" >
+        NODEX_NDL,
+      </if>
+      <if test="nodeyNdl != null" >
+        NODEY_NDL,
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF,
+      </if>
+      <if test="layeridEle != null" >
+        LAYERID_ELE,
+      </if>
+       <if test="nodenumNdl != null" >
+        NODENUM_NDL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodeidNdl != null" >
+        #{nodeidNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="nodexNdl != null" >
+        #{nodexNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="nodeyNdl != null" >
+        #{nodeyNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="projectidProaff != null" >
+        #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="layeridEle != null" >
+        #{layeridEle,jdbcType=DECIMAL},
+      </if>
+      <if test="nodenumNdl != null" >
+        #{nodenumNdl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <select id="countByExample" parameterType="com.ywjs.model.entity.ElementNodeExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 18:21:09 CST 2019.
+    -->
+    select count(*) from ELEMENT_NODE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 18:21:09 CST 2019.
+    -->
+    update ELEMENT_NODE_TBL
+    <set >
+      <if test="record.nodeidNdl != null" >
+        NODEID_NDL = #{record.nodeidNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nodexNdl != null" >
+        NODEX_NDL = #{record.nodexNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nodeyNdl != null" >
+        NODEY_NDL = #{record.nodeyNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.projectidProaff != null" >
+        PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.layeridEle != null" >
+        LAYERID_ELE = #{record.layeridEle,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 18:21:09 CST 2019.
+    -->
+    update ELEMENT_NODE_TBL
+    set NODEID_NDL = #{record.nodeidNdl,jdbcType=DECIMAL},
+      NODEX_NDL = #{record.nodexNdl,jdbcType=DECIMAL},
+      NODEY_NDL = #{record.nodeyNdl,jdbcType=DECIMAL},
+      PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      LAYERID_ELE = #{record.layeridEle,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.ElementNode" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 18:21:09 CST 2019.
+    -->
+    update ELEMENT_NODE_TBL
+    <set >
+      <if test="nodexNdl != null" >
+        NODEX_NDL = #{nodexNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="nodeyNdl != null" >
+        NODEY_NDL = #{nodeyNdl,jdbcType=DECIMAL},
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="layeridEle != null" >
+        LAYERID_ELE = #{layeridEle,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where NODEID_NDL = #{nodeidNdl,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.ElementNode" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Wed Nov 13 18:21:09 CST 2019.
+    -->
+    update ELEMENT_NODE_TBL
+    set NODEX_NDL = #{nodexNdl,jdbcType=DECIMAL},
+      NODEY_NDL = #{nodeyNdl,jdbcType=DECIMAL},
+      PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      LAYERID_ELE = #{layeridEle,jdbcType=DECIMAL}
+    where NODEID_NDL = #{nodeidNdl,jdbcType=DECIMAL}
+  </update>
+</mapper>

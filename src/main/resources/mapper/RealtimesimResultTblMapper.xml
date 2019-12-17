@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywjs.mapper.RealtimesimResultTblMapper">
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.RealtimesimResultTbl">
+    <id column="SIMULATIONID_REALSIMALL" property="simulationidRealsimall" jdbcType="BIGINT" />
+    <result column="SIMULATIONID_REALSIM" property="simulationidRealsim" jdbcType="DECIMAL" />
+    <result column="REALTIME_SIM" property="realtimeSim" jdbcType="TIMESTAMP" />
+    <!--<constructor>-->
+      <!--<arg column="SIMULATIONID_REALSIMALL" javaType="java.lang.Long" jdbcType="DECIMAL" />-->
+      <!--<arg column="SIMULATIONID_REALSIM" javaType="java.lang.Integer" jdbcType="DECIMAL" />-->
+      <!--<arg column="REALTIME_SIM" javaType="java.util.Date" jdbcType="TIMESTAMP" />-->
+    <!--</constructor>-->
+  </resultMap>
+  <insert id="insert" parameterType="com.ywjs.model.entity.RealtimesimResultTbl">
+--     useGeneratedKeys="true" keyProperty="SIMULATIONID_REALSIMALL"
+    <selectKey resultType="Long" order="AFTER" keyProperty="simulationidRealsimall">
+      <!-- select PROJECT_TBL_SEQ.nextval  from dual -->
+      select max(SIMULATIONID_REALSIMALL) from REALTIMESIM_RESULT_TBL
+    </selectKey>
+    insert into REALTIMESIM_RESULT_TBL (SIMULATIONID_REALSIMALL, SIMULATIONID_REALSIM, 
+      REALTIME_SIM)
+    values (#{simulationidRealsimall,jdbcType=DECIMAL}, #{simulationidRealsim,jdbcType=DECIMAL}, 
+      #{realtimeSim,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.RealtimesimResultTbl">
+    <selectKey resultType="Long" order="AFTER" keyProperty="simulationidRealsimall">
+      <!-- select PROJECT_TBL_SEQ.nextval  from dual -->
+      select max(SIMULATIONID_REALSIMALL) from REALTIMESIM_RESULT_TBL
+    </selectKey>
+    insert into REALTIMESIM_RESULT_TBL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="simulationidRealsimall != null">
+        SIMULATIONID_REALSIMALL,
+      </if>
+      <if test="simulationidRealsim != null">
+        SIMULATIONID_REALSIM,
+      </if>
+      <if test="realtimeSim != null">
+        REALTIME_SIM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="simulationidRealsimall != null">
+        #{simulationidRealsimall,jdbcType=DECIMAL},
+      </if>
+      <if test="simulationidRealsim != null">
+        #{simulationidRealsim,jdbcType=DECIMAL},
+      </if>
+      <if test="realtimeSim != null">
+        #{realtimeSim,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByRealtime" resultType="java.lang.Integer" parameterType="com.ywjs.model.entity.RealtimesimResultTbl">
+    SELECT
+      SIMULATIONID_REALSIMALL
+    FROM
+      REALTIMESIM_RESULT_TBL
+    WHERE
+      TRUNC(REALTIME_SIM,'mi') = #{realtime}
+  </select>
+  <select id="selectRealtimeById" resultType="java.util.Date" parameterType="com.ywjs.model.entity.RealtimesimResultTbl">
+    select REALTIME_SIM
+    from realtimesim_result_tbl
+    where simulationid_realsimall=#{simulationId}
+  </select>
+</mapper>

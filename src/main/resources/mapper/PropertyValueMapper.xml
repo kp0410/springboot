@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.PropertyValueMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.PropertyValue" >
+    <id column="PROVALUEID_PROVAL" property="provalueidProval" jdbcType="DECIMAL" />
+    <result column="WORKID_WORK" property="workidWork" jdbcType="DECIMAL" />
+    <result column="PROPERTYID_PRO" property="propertyidPro" jdbcType="DECIMAL" />
+    <result column="ELEMENTREALNAME_ELE" property="elementrealnameEle" jdbcType="VARCHAR" />
+    <result column="PROVALUE_PROVAL" property="provalueProval" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROVALUEID_PROVAL, WORKID_WORK, PROPERTYID_PRO, ELEMENTREALNAME_ELE, PROVALUE_PROVAL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.PropertyValueExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PROPERTY_VALUE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PROPERTY_VALUE_TBL
+    where PROVALUEID_PROVAL = #{provalueidProval,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PROPERTY_VALUE_TBL
+    where PROVALUEID_PROVAL = #{provalueidProval,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.PropertyValueExample" >
+    delete from PROPERTY_VALUE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.PropertyValue" >
+     <selectKey resultType="Long" order="AFTER" keyProperty="provalueidProval">
+     	select max(PROVALUEID_PROVAL) from PROPERTY_VALUE_TBL
+    </selectKey>
+    insert into PROPERTY_VALUE_TBL (PROVALUEID_PROVAL, WORKID_WORK, PROPERTYID_PRO, 
+      ELEMENTREALNAME_ELE, PROVALUE_PROVAL)
+    values (#{provalueidProval,jdbcType=DECIMAL}, #{workidWork,jdbcType=DECIMAL}, #{propertyidPro,jdbcType=DECIMAL}, 
+      #{elementrealnameEle,jdbcType=VARCHAR}, #{provalueProval,jdbcType=VARCHAR})
+  </insert>
+
+	<!-- 批量插入 -->
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into PROPERTY_VALUE_TBL (PROVALUEID_PROVAL, WORKID_WORK, PROPERTYID_PRO, 
+      ELEMENTREALNAME_ELE, PROVALUE_PROVAL)
+		<foreach close=")" collection="list" item="item" index="index"
+			open="(" separator="union all">
+			select
+			#{item.provalueidProval,jdbcType=DECIMAL}, 
+			#{item.workidWork,jdbcType=DECIMAL}, 
+			#{item.propertyidPro,jdbcType=DECIMAL}, 
+      		#{item.elementrealnameEle,jdbcType=VARCHAR}, 
+      		#{item.provalueProval,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+  
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.PropertyValue" >
+     <selectKey resultType="Long" order="AFTER" keyProperty="provalueidProval">
+     	select max(PROVALUEID_PROVAL) from PROPERTY_VALUE_TBL
+    </selectKey>
+    insert into PROPERTY_VALUE_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="provalueidProval != null" >
+        PROVALUEID_PROVAL,
+      </if>
+      <if test="workidWork != null" >
+        WORKID_WORK,
+      </if>
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO,
+      </if>
+      <if test="elementrealnameEle != null" >
+        ELEMENTREALNAME_ELE,
+      </if>
+      <if test="provalueProval != null" >
+        PROVALUE_PROVAL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="provalueidProval != null" >
+        #{provalueidProval,jdbcType=DECIMAL},
+      </if>
+      <if test="workidWork != null" >
+        #{workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="propertyidPro != null" >
+        #{propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="elementrealnameEle != null" >
+        #{elementrealnameEle,jdbcType=VARCHAR},
+      </if>
+      <if test="provalueProval != null" >
+        #{provalueProval,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.PropertyValueExample" resultType="java.lang.Long" >
+    select count(*) from PROPERTY_VALUE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PROPERTY_VALUE_TBL
+    <set >
+      <if test="record.provalueidProval != null" >
+        PROVALUEID_PROVAL = #{record.provalueidProval,jdbcType=DECIMAL},
+      </if>
+      <if test="record.workidWork != null" >
+        WORKID_WORK = #{record.workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.propertyidPro != null" >
+        PROPERTYID_PRO = #{record.propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.elementrealnameEle != null" >
+        ELEMENTREALNAME_ELE = #{record.elementrealnameEle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provalueProval != null" >
+        PROVALUE_PROVAL = #{record.provalueProval,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Sat Nov 16 17:38:31 CST 2019.
+    -->
+    update PROPERTY_VALUE_TBL
+    set PROVALUEID_PROVAL = #{record.provalueidProval,jdbcType=DECIMAL},
+      WORKID_WORK = #{record.workidWork,jdbcType=DECIMAL},
+      PROPERTYID_PRO = #{record.propertyidPro,jdbcType=DECIMAL},
+      ELEMENTREALNAME_ELE = #{record.elementrealnameEle,jdbcType=VARCHAR},
+      PROVALUE_PROVAL = #{record.provalueProval,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.PropertyValue" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Sat Nov 16 17:38:31 CST 2019.
+    -->
+    update PROPERTY_VALUE_TBL
+    <set >
+      <if test="workidWork != null" >
+        WORKID_WORK = #{workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="elementrealnameEle != null" >
+        ELEMENTREALNAME_ELE = #{elementrealnameEle,jdbcType=VARCHAR},
+      </if>
+      <if test="provalueProval != null" >
+        PROVALUE_PROVAL = #{provalueProval,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROVALUEID_PROVAL = #{provalueidProval,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.PropertyValue" >
+    update PROPERTY_VALUE_TBL
+    set WORKID_WORK = #{workidWork,jdbcType=DECIMAL},
+      PROPERTYID_PRO = #{propertyidPro,jdbcType=DECIMAL},
+      ELEMENTREALNAME_ELE = #{elementrealnameEle,jdbcType=VARCHAR},
+      PROVALUE_PROVAL = #{provalueProval,jdbcType=VARCHAR}
+    where PROVALUEID_PROVAL = #{provalueidProval,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.OptimizeMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.Optimize" >
+    <id column="OPTIMID_OPTIM" property="optimidOptim" jdbcType="VARCHAR" />
+    <result column="OPTIMNAME_OPTIM" property="optimnameOptim" jdbcType="VARCHAR" />
+    <result column="OPTIMUSERNAME_OPTIM" property="optimusernameOptim" jdbcType="VARCHAR" />
+    <result column="WORKID_WORK" property="workidWork" jdbcType="DECIMAL" />
+    <result column="WORKIDEND_WORK" property="workidendWork" jdbcType="DECIMAL" />
+    <result column="CREATEDATE_OPTIM" property="createdateOptim" jdbcType="TIMESTAMP" />
+    <result column="REMARK_OPTIM" property="remarkOptim" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OPTIMID_OPTIM, OPTIMNAME_OPTIM, OPTIMUSERNAME_OPTIM, WORKID_WORK, WORKIDEND_WORK, 
+    CREATEDATE_OPTIM, REMARK_OPTIM
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.OptimizeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from OPTIMIZE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from OPTIMIZE_TBL
+    where OPTIMID_OPTIM = #{optimidOptim,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OPTIMIZE_TBL
+    where OPTIMID_OPTIM = #{optimidOptim,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.OptimizeExample" >
+    delete from OPTIMIZE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.Optimize" >
+    insert into OPTIMIZE_TBL (OPTIMID_OPTIM, OPTIMNAME_OPTIM, OPTIMUSERNAME_OPTIM, 
+      WORKID_WORK, WORKIDEND_WORK, CREATEDATE_OPTIM, 
+      REMARK_OPTIM)
+    values (#{optimidOptim,jdbcType=VARCHAR}, #{optimnameOptim,jdbcType=VARCHAR}, #{optimusernameOptim,jdbcType=VARCHAR}, 
+      #{workidWork,jdbcType=DECIMAL}, #{workidendWork,jdbcType=DECIMAL}, #{createdateOptim,jdbcType=TIMESTAMP}, 
+      #{remarkOptim,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.Optimize" >
+    insert into OPTIMIZE_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="optimidOptim != null" >
+        OPTIMID_OPTIM,
+      </if>
+      <if test="optimnameOptim != null" >
+        OPTIMNAME_OPTIM,
+      </if>
+      <if test="optimusernameOptim != null" >
+        OPTIMUSERNAME_OPTIM,
+      </if>
+      <if test="workidWork != null" >
+        WORKID_WORK,
+      </if>
+      <if test="workidendWork != null" >
+        WORKIDEND_WORK,
+      </if>
+      <if test="createdateOptim != null" >
+        CREATEDATE_OPTIM,
+      </if>
+      <if test="remarkOptim != null" >
+        REMARK_OPTIM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="optimidOptim != null" >
+        #{optimidOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="optimnameOptim != null" >
+        #{optimnameOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="optimusernameOptim != null" >
+        #{optimusernameOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="workidWork != null" >
+        #{workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="workidendWork != null" >
+        #{workidendWork,jdbcType=DECIMAL},
+      </if>
+      <if test="createdateOptim != null" >
+        #{createdateOptim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkOptim != null" >
+        #{remarkOptim,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.OptimizeExample" resultType="java.lang.Integer" >
+    select count(*) from OPTIMIZE_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update OPTIMIZE_TBL
+    <set >
+      <if test="record.optimidOptim != null" >
+        OPTIMID_OPTIM = #{record.optimidOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optimnameOptim != null" >
+        OPTIMNAME_OPTIM = #{record.optimnameOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optimusernameOptim != null" >
+        OPTIMUSERNAME_OPTIM = #{record.optimusernameOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workidWork != null" >
+        WORKID_WORK = #{record.workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.workidendWork != null" >
+        WORKIDEND_WORK = #{record.workidendWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createdateOptim != null" >
+        CREATEDATE_OPTIM = #{record.createdateOptim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remarkOptim != null" >
+        REMARK_OPTIM = #{record.remarkOptim,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update OPTIMIZE_TBL
+    set OPTIMID_OPTIM = #{record.optimidOptim,jdbcType=VARCHAR},
+      OPTIMNAME_OPTIM = #{record.optimnameOptim,jdbcType=VARCHAR},
+      OPTIMUSERNAME_OPTIM = #{record.optimusernameOptim,jdbcType=VARCHAR},
+      WORKID_WORK = #{record.workidWork,jdbcType=DECIMAL},
+      WORKIDEND_WORK = #{record.workidendWork,jdbcType=DECIMAL},
+      CREATEDATE_OPTIM = #{record.createdateOptim,jdbcType=TIMESTAMP},
+      REMARK_OPTIM = #{record.remarkOptim,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.Optimize" >
+    update OPTIMIZE_TBL
+    <set >
+      <if test="optimnameOptim != null" >
+        OPTIMNAME_OPTIM = #{optimnameOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="optimusernameOptim != null" >
+        OPTIMUSERNAME_OPTIM = #{optimusernameOptim,jdbcType=VARCHAR},
+      </if>
+      <if test="workidWork != null" >
+        WORKID_WORK = #{workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="workidendWork != null" >
+        WORKIDEND_WORK = #{workidendWork,jdbcType=DECIMAL},
+      </if>
+      <if test="createdateOptim != null" >
+        CREATEDATE_OPTIM = #{createdateOptim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkOptim != null" >
+        REMARK_OPTIM = #{remarkOptim,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPTIMID_OPTIM = #{optimidOptim,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.Optimize" >
+    update OPTIMIZE_TBL
+    set OPTIMNAME_OPTIM = #{optimnameOptim,jdbcType=VARCHAR},
+      OPTIMUSERNAME_OPTIM = #{optimusernameOptim,jdbcType=VARCHAR},
+      WORKID_WORK = #{workidWork,jdbcType=DECIMAL},
+      WORKIDEND_WORK = #{workidendWork,jdbcType=DECIMAL},
+      CREATEDATE_OPTIM = #{createdateOptim,jdbcType=TIMESTAMP},
+      REMARK_OPTIM = #{remarkOptim,jdbcType=VARCHAR}
+    where OPTIMID_OPTIM = #{optimidOptim,jdbcType=VARCHAR}
+  </update>
+</mapper>

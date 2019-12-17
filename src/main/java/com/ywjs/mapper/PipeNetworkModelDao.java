@@ -1,0 +1,24 @@
+/** 
+ * @file: PipeNetworkModelDao.java 
+ * @Package： com.ywjs.mapper 
+ * @Description: TODO(用一句话描述该文件做什么) 
+ * @author： 周伟
+ * @date： 2019年11月11日 下午5:47:18 
+ * @version： V1.0 
+ * @par 版权信息：
+ * 		2019 Copyright 北京鑫远望景盛展科技有限公司 All Rights Reserved.
+ */ 
+package com.ywjs.mapper;
+
+import com.ywjs.model.entity.Project;
+import com.ywjs.model.query.QueryProject;
+
+/**
+ * @ClassName PipeNetworkModelDao
+ * @Description TODO(这里用一句话描述这个类的作用) 
+ * @Author 周伟
+ * @Date 2019年11月11日 下午5:47:18
+ */
+public interface PipeNetworkModelDao extends BaseDao<Project, QueryProject> {
+
+}

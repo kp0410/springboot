@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywjs.mapper.SimelePipeResultTblMapper">
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.SimelePipeResultTbl">
+    <constructor>
+      <idArg column="SIMULATIONID_REALSIM" javaType="java.lang.Short" jdbcType="DECIMAL" />
+      <idArg column="PIPENAME_SIMPIPERES" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="MILEAGE_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="PIPEID_SIMPIPERES" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ELEVATION_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="TEMPERATURE_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="PRESSURE_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="FLOW_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="LIQUID_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="FLOWRATE_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="GASHEAT_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="LIQUIDHEAT_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="GASDENSITY_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="LIQUIDDENSITY_SIMPIPERES" javaType="java.lang.Double" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    SIMULATIONID_REALSIM, PIPENAME_SIMPIPERES, MILEAGE_SIMPIPERES, PIPEID_SIMPIPERES, 
+    ELEVATION_SIMPIPERES, TEMPERATURE_SIMPIPERES, PRESSURE_SIMPIPERES, FLOW_SIMPIPERES, 
+    LIQUID_SIMPIPERES, FLOWRATE_SIMPIPERES, GASHEAT_SIMPIPERES, LIQUIDHEAT_SIMPIPERES, 
+    GASDENSITY_SIMPIPERES, LIQUIDDENSITY_SIMPIPERES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.ywjs.model.entity.SimelePipeResultTblKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SIMELE_PIPE_RESULT_TBL
+    where SIMULATIONID_REALSIM = #{simulationidRealsim,jdbcType=DECIMAL}
+      and PIPENAME_SIMPIPERES = #{pipenameSimpiperes,jdbcType=VARCHAR}
+      and MILEAGE_SIMPIPERES = #{mileageSimpiperes,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ywjs.model.entity.SimelePipeResultTblKey">
+    delete from SIMELE_PIPE_RESULT_TBL
+    where SIMULATIONID_REALSIM = #{simulationidRealsim,jdbcType=DECIMAL}
+      and PIPENAME_SIMPIPERES = #{pipenameSimpiperes,jdbcType=VARCHAR}
+      and MILEAGE_SIMPIPERES = #{mileageSimpiperes,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.SimelePipeResultTbl">
+    insert into SIMELE_PIPE_RESULT_TBL (SIMULATIONID_REALSIM, PIPENAME_SIMPIPERES, 
+      MILEAGE_SIMPIPERES, PIPEID_SIMPIPERES, ELEVATION_SIMPIPERES, 
+      TEMPERATURE_SIMPIPERES, PRESSURE_SIMPIPERES, 
+      FLOW_SIMPIPERES, LIQUID_SIMPIPERES, FLOWRATE_SIMPIPERES, 
+      GASHEAT_SIMPIPERES, LIQUIDHEAT_SIMPIPERES, 
+      GASDENSITY_SIMPIPERES, LIQUIDDENSITY_SIMPIPERES
+      )
+    values (#{simulationidRealsim,jdbcType=DECIMAL}, #{pipenameSimpiperes,jdbcType=VARCHAR}, 
+      #{mileageSimpiperes,jdbcType=DECIMAL}, #{pipeidSimpiperes,jdbcType=VARCHAR}, #{elevationSimpiperes,jdbcType=DECIMAL}, 
+      #{temperatureSimpiperes,jdbcType=DECIMAL}, #{pressureSimpiperes,jdbcType=DECIMAL}, 
+      #{flowSimpiperes,jdbcType=DECIMAL}, #{liquidSimpiperes,jdbcType=DECIMAL}, #{flowrateSimpiperes,jdbcType=DECIMAL}, 
+      #{gasheatSimpiperes,jdbcType=DECIMAL}, #{liquidheatSimpiperes,jdbcType=DECIMAL}, 
+      #{gasdensitySimpiperes,jdbcType=DECIMAL}, #{liquiddensitySimpiperes,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.SimelePipeResultTbl">
+    insert into SIMELE_PIPE_RESULT_TBL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="simulationidRealsim != null">
+        SIMULATIONID_REALSIM,
+      </if>
+      <if test="pipenameSimpiperes != null">
+        PIPENAME_SIMPIPERES,
+      </if>
+      <if test="mileageSimpiperes != null">
+        MILEAGE_SIMPIPERES,
+      </if>
+      <if test="pipeidSimpiperes != null">
+        PIPEID_SIMPIPERES,
+      </if>
+      <if test="elevationSimpiperes != null">
+        ELEVATION_SIMPIPERES,
+      </if>
+      <if test="temperatureSimpiperes != null">
+        TEMPERATURE_SIMPIPERES,
+      </if>
+      <if test="pressureSimpiperes != null">
+        PRESSURE_SIMPIPERES,
+      </if>
+      <if test="flowSimpiperes != null">
+        FLOW_SIMPIPERES,
+      </if>
+      <if test="liquidSimpiperes != null">
+        LIQUID_SIMPIPERES,
+      </if>
+      <if test="flowrateSimpiperes != null">
+        FLOWRATE_SIMPIPERES,
+      </if>
+      <if test="gasheatSimpiperes != null">
+        GASHEAT_SIMPIPERES,
+      </if>
+      <if test="liquidheatSimpiperes != null">
+        LIQUIDHEAT_SIMPIPERES,
+      </if>
+      <if test="gasdensitySimpiperes != null">
+        GASDENSITY_SIMPIPERES,
+      </if>
+      <if test="liquiddensitySimpiperes != null">
+        LIQUIDDENSITY_SIMPIPERES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="simulationidRealsim != null">
+        #{simulationidRealsim,jdbcType=DECIMAL},
+      </if>
+      <if test="pipenameSimpiperes != null">
+        #{pipenameSimpiperes,jdbcType=VARCHAR},
+      </if>
+      <if test="mileageSimpiperes != null">
+        #{mileageSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="pipeidSimpiperes != null">
+        #{pipeidSimpiperes,jdbcType=VARCHAR},
+      </if>
+      <if test="elevationSimpiperes != null">
+        #{elevationSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="temperatureSimpiperes != null">
+        #{temperatureSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="pressureSimpiperes != null">
+        #{pressureSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowSimpiperes != null">
+        #{flowSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidSimpiperes != null">
+        #{liquidSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowrateSimpiperes != null">
+        #{flowrateSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="gasheatSimpiperes != null">
+        #{gasheatSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidheatSimpiperes != null">
+        #{liquidheatSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="gasdensitySimpiperes != null">
+        #{gasdensitySimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="liquiddensitySimpiperes != null">
+        #{liquiddensitySimpiperes,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.SimelePipeResultTbl">
+    update SIMELE_PIPE_RESULT_TBL
+    <set>
+      <if test="pipeidSimpiperes != null">
+        PIPEID_SIMPIPERES = #{pipeidSimpiperes,jdbcType=VARCHAR},
+      </if>
+      <if test="elevationSimpiperes != null">
+        ELEVATION_SIMPIPERES = #{elevationSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="temperatureSimpiperes != null">
+        TEMPERATURE_SIMPIPERES = #{temperatureSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="pressureSimpiperes != null">
+        PRESSURE_SIMPIPERES = #{pressureSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowSimpiperes != null">
+        FLOW_SIMPIPERES = #{flowSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidSimpiperes != null">
+        LIQUID_SIMPIPERES = #{liquidSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="flowrateSimpiperes != null">
+        FLOWRATE_SIMPIPERES = #{flowrateSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="gasheatSimpiperes != null">
+        GASHEAT_SIMPIPERES = #{gasheatSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidheatSimpiperes != null">
+        LIQUIDHEAT_SIMPIPERES = #{liquidheatSimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="gasdensitySimpiperes != null">
+        GASDENSITY_SIMPIPERES = #{gasdensitySimpiperes,jdbcType=DECIMAL},
+      </if>
+      <if test="liquiddensitySimpiperes != null">
+        LIQUIDDENSITY_SIMPIPERES = #{liquiddensitySimpiperes,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where SIMULATIONID_REALSIM = #{simulationidRealsim,jdbcType=DECIMAL}
+      and PIPENAME_SIMPIPERES = #{pipenameSimpiperes,jdbcType=VARCHAR}
+      and MILEAGE_SIMPIPERES = #{mileageSimpiperes,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.SimelePipeResultTbl">
+    update SIMELE_PIPE_RESULT_TBL
+    set PIPEID_SIMPIPERES = #{pipeidSimpiperes,jdbcType=VARCHAR},
+      ELEVATION_SIMPIPERES = #{elevationSimpiperes,jdbcType=DECIMAL},
+      TEMPERATURE_SIMPIPERES = #{temperatureSimpiperes,jdbcType=DECIMAL},
+      PRESSURE_SIMPIPERES = #{pressureSimpiperes,jdbcType=DECIMAL},
+      FLOW_SIMPIPERES = #{flowSimpiperes,jdbcType=DECIMAL},
+      LIQUID_SIMPIPERES = #{liquidSimpiperes,jdbcType=DECIMAL},
+      FLOWRATE_SIMPIPERES = #{flowrateSimpiperes,jdbcType=DECIMAL},
+      GASHEAT_SIMPIPERES = #{gasheatSimpiperes,jdbcType=DECIMAL},
+      LIQUIDHEAT_SIMPIPERES = #{liquidheatSimpiperes,jdbcType=DECIMAL},
+      GASDENSITY_SIMPIPERES = #{gasdensitySimpiperes,jdbcType=DECIMAL},
+      LIQUIDDENSITY_SIMPIPERES = #{liquiddensitySimpiperes,jdbcType=DECIMAL}
+    where SIMULATIONID_REALSIM = #{simulationidRealsim,jdbcType=DECIMAL}
+      and PIPENAME_SIMPIPERES = #{pipenameSimpiperes,jdbcType=VARCHAR}
+      and MILEAGE_SIMPIPERES = #{mileageSimpiperes,jdbcType=DECIMAL}
+  </update>
+</mapper>

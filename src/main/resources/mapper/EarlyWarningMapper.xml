@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.EarlyWarningMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.EarlyWarning" >
+    <id column="EARWARID_EARWAR" property="earwaridEarwar" jdbcType="DECIMAL" />
+    <result column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="VARCHAR" />
+    <result column="LAYERID_EARWAR" property="layeridEarwar" jdbcType="VARCHAR" />
+    <result column="ELEMENTREALNAME_EARWAR" property="elementrealnameEarwar" jdbcType="VARCHAR" />
+    <result column="EXPERIENCE_EARWAR" property="experienceEarwar" jdbcType="VARCHAR" />
+    <result column="PROPERTYID_PRO" property="propertyidPro" jdbcType="VARCHAR" />
+    <result column="SETTING_EARWAR" property="settingEarwar" jdbcType="DECIMAL" />
+    <result column="CRITICALLOW_EARWAR" property="criticallowEarwar" jdbcType="DECIMAL" />
+    <result column="CRITICALHIGH_EARWAR" property="criticalhighEarwar" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EARWARID_EARWAR, PROJECTID_PROAFF, LAYERID_EARWAR, ELEMENTREALNAME_EARWAR, EXPERIENCE_EARWAR, 
+    PROPERTYID_PRO, SETTING_EARWAR, CRITICALLOW_EARWAR, CRITICALHIGH_EARWAR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.EarlyWarningExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EARLY_WARNING_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from EARLY_WARNING_TBL
+    where EARWARID_EARWAR = #{earwaridEarwar,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from EARLY_WARNING_TBL
+    where EARWARID_EARWAR = #{earwaridEarwar,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.EarlyWarningExample" >
+    delete from EARLY_WARNING_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.EarlyWarning" >
+    insert into EARLY_WARNING_TBL (EARWARID_EARWAR, PROJECTID_PROAFF, 
+      LAYERID_EARWAR, ELEMENTREALNAME_EARWAR, EXPERIENCE_EARWAR, 
+      PROPERTYID_PRO, SETTING_EARWAR, CRITICALLOW_EARWAR, 
+      CRITICALHIGH_EARWAR)
+    values (#{earwaridEarwar,jdbcType=DECIMAL}, #{projectidProaff,jdbcType=VARCHAR}, 
+      #{layeridEarwar,jdbcType=VARCHAR}, #{elementrealnameEarwar,jdbcType=VARCHAR}, #{experienceEarwar,jdbcType=VARCHAR}, 
+      #{propertyidPro,jdbcType=VARCHAR}, #{settingEarwar,jdbcType=DECIMAL}, #{criticallowEarwar,jdbcType=DECIMAL}, 
+      #{criticalhighEarwar,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.EarlyWarning" >
+    insert into EARLY_WARNING_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="earwaridEarwar != null" >
+        EARWARID_EARWAR,
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF,
+      </if>
+      <if test="layeridEarwar != null" >
+        LAYERID_EARWAR,
+      </if>
+      <if test="elementrealnameEarwar != null" >
+        ELEMENTREALNAME_EARWAR,
+      </if>
+      <if test="experienceEarwar != null" >
+        EXPERIENCE_EARWAR,
+      </if>
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO,
+      </if>
+      <if test="settingEarwar != null" >
+        SETTING_EARWAR,
+      </if>
+      <if test="criticallowEarwar != null" >
+        CRITICALLOW_EARWAR,
+      </if>
+      <if test="criticalhighEarwar != null" >
+        CRITICALHIGH_EARWAR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="earwaridEarwar != null" >
+        #{earwaridEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="projectidProaff != null" >
+        #{projectidProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="layeridEarwar != null" >
+        #{layeridEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="elementrealnameEarwar != null" >
+        #{elementrealnameEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceEarwar != null" >
+        #{experienceEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyidPro != null" >
+        #{propertyidPro,jdbcType=VARCHAR},
+      </if>
+      <if test="settingEarwar != null" >
+        #{settingEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="criticallowEarwar != null" >
+        #{criticallowEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="criticalhighEarwar != null" >
+        #{criticalhighEarwar,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.EarlyWarningExample" resultType="java.lang.Integer" >
+    select count(*) from EARLY_WARNING_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update EARLY_WARNING_TBL
+    <set >
+      <if test="record.earwaridEarwar != null" >
+        EARWARID_EARWAR = #{record.earwaridEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="record.projectidProaff != null" >
+        PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.layeridEarwar != null" >
+        LAYERID_EARWAR = #{record.layeridEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.elementrealnameEarwar != null" >
+        ELEMENTREALNAME_EARWAR = #{record.elementrealnameEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experienceEarwar != null" >
+        EXPERIENCE_EARWAR = #{record.experienceEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propertyidPro != null" >
+        PROPERTYID_PRO = #{record.propertyidPro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settingEarwar != null" >
+        SETTING_EARWAR = #{record.settingEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="record.criticallowEarwar != null" >
+        CRITICALLOW_EARWAR = #{record.criticallowEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="record.criticalhighEarwar != null" >
+        CRITICALHIGH_EARWAR = #{record.criticalhighEarwar,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update EARLY_WARNING_TBL
+    set EARWARID_EARWAR = #{record.earwaridEarwar,jdbcType=DECIMAL},
+      PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=VARCHAR},
+      LAYERID_EARWAR = #{record.layeridEarwar,jdbcType=VARCHAR},
+      ELEMENTREALNAME_EARWAR = #{record.elementrealnameEarwar,jdbcType=VARCHAR},
+      EXPERIENCE_EARWAR = #{record.experienceEarwar,jdbcType=VARCHAR},
+      PROPERTYID_PRO = #{record.propertyidPro,jdbcType=VARCHAR},
+      SETTING_EARWAR = #{record.settingEarwar,jdbcType=DECIMAL},
+      CRITICALLOW_EARWAR = #{record.criticallowEarwar,jdbcType=DECIMAL},
+      CRITICALHIGH_EARWAR = #{record.criticalhighEarwar,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.EarlyWarning" >
+    update EARLY_WARNING_TBL
+    <set >
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF = #{projectidProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="layeridEarwar != null" >
+        LAYERID_EARWAR = #{layeridEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="elementrealnameEarwar != null" >
+        ELEMENTREALNAME_EARWAR = #{elementrealnameEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceEarwar != null" >
+        EXPERIENCE_EARWAR = #{experienceEarwar,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyidPro != null" >
+        PROPERTYID_PRO = #{propertyidPro,jdbcType=VARCHAR},
+      </if>
+      <if test="settingEarwar != null" >
+        SETTING_EARWAR = #{settingEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="criticallowEarwar != null" >
+        CRITICALLOW_EARWAR = #{criticallowEarwar,jdbcType=DECIMAL},
+      </if>
+      <if test="criticalhighEarwar != null" >
+        CRITICALHIGH_EARWAR = #{criticalhighEarwar,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where EARWARID_EARWAR = #{earwaridEarwar,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.EarlyWarning" >
+    update EARLY_WARNING_TBL
+    set PROJECTID_PROAFF = #{projectidProaff,jdbcType=VARCHAR},
+      LAYERID_EARWAR = #{layeridEarwar,jdbcType=VARCHAR},
+      ELEMENTREALNAME_EARWAR = #{elementrealnameEarwar,jdbcType=VARCHAR},
+      EXPERIENCE_EARWAR = #{experienceEarwar,jdbcType=VARCHAR},
+      PROPERTYID_PRO = #{propertyidPro,jdbcType=VARCHAR},
+      SETTING_EARWAR = #{settingEarwar,jdbcType=DECIMAL},
+      CRITICALLOW_EARWAR = #{criticallowEarwar,jdbcType=DECIMAL},
+      CRITICALHIGH_EARWAR = #{criticalhighEarwar,jdbcType=DECIMAL}
+    where EARWARID_EARWAR = #{earwaridEarwar,jdbcType=DECIMAL}
+  </update>
+</mapper>

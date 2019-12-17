@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.ProjectMapper" >
+
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.Project" >
+    <id column="PROJECTID_PRO" property="projectidPro" jdbcType="BIGINT" />
+    <result column="PROJECTNAME_PRO" property="projectnamePro" jdbcType="VARCHAR" />
+    <result column="CREATEDATE_PRO" property="createdatePro" jdbcType="TIMESTAMP" />
+    <result column="PROUSERNAME_PRO" property="prousernamePro" jdbcType="VARCHAR" />
+    <result column="REMARK_PRO" property="remarkPro" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROJECTID_PRO, PROJECTNAME_PRO, CREATEDATE_PRO, PROUSERNAME_PRO, REMARK_PRO
+  </sql>
+  <!--selectAllToProjectVO-->
+  <select id="selectAllToProjectVO" resultType="com.ywjs.model.vo.ProjectVO">
+    select PROJECTID_PRO as projectid,PROJECTNAME_PRO as projectname from PROJECT_TBL
+    ORDER BY PROJECTID_PRO desc
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.ProjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PROJECT_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PROJECT_TBL
+    where PROJECTID_PRO = #{projectidPro,jdbcType=DECIMAL}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" resultType="com.ywjs.model.entity.Project" >
+    select 
+    <include refid="Base_Column_List" />
+    from PROJECT_TBL
+    ORDER BY PROJECTID_PRO DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PROJECT_TBL
+    where PROJECTID_PRO = #{projectidPro,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.ProjectExample" >
+    delete from PROJECT_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.Project" >
+   <selectKey resultType="Long" order="AFTER" keyProperty="projectidPro">
+     	<!-- select PROJECT_TBL_SEQ.nextval  from dual -->
+     	select max(PROJECTID_PRO) from PROJECT_TBL
+    </selectKey>
+    insert into PROJECT_TBL (<!-- PROJECTID_PRO, --> PROJECTNAME_PRO, CREATEDATE_PRO, 
+      PROUSERNAME_PRO, REMARK_PRO)
+    values (<!-- #{projectidPro,jdbcType=DECIMAL}, --> #{projectnamePro,jdbcType=VARCHAR}, #{createdatePro,jdbcType=TIMESTAMP}, 
+      #{prousernamePro,jdbcType=VARCHAR}, #{remarkPro,jdbcType=VARCHAR})
+  </insert>
+  <!-- oracle不支持useGeneratedKeys="true" keyProperty="projectidPro" -->
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.Project" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="projectidPro">
+     	<!-- select PROJECT_TBL_SEQ.nextval  from dual -->
+     	select max(PROJECTID_PRO) from PROJECT_TBL
+    </selectKey>
+    insert into PROJECT_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectidPro != null" >
+        PROJECTID_PRO,
+      </if>
+      <if test="projectnamePro != null" >
+        PROJECTNAME_PRO,
+      </if>
+      <if test="createdatePro != null" >
+        CREATEDATE_PRO,
+      </if>
+      <if test="prousernamePro != null" >
+        PROUSERNAME_PRO,
+      </if>
+      <if test="remarkPro != null" >
+        REMARK_PRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectidPro != null" >
+        #{projectidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="projectnamePro != null" >
+        #{projectnamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="createdatePro != null" >
+        #{createdatePro,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prousernamePro != null" >
+        #{prousernamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkPro != null" >
+        #{remarkPro,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+	<!-- mysql可用动态批量插入 -->
+	<!-- <insert id="insertSelectiveBatch2" parameterType="java.util.List">
+		insert into PROJECT_TBL
+		(PROJECTID_PRO, PROJECTNAME_PRO, CREATEDATE_PRO,
+		PROUSERNAME_PRO, REMARK_PRO)
+		values
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.projectidPro,jdbcType=DECIMAL},
+			#{item.projectnamePro,jdbcType=VARCHAR},
+			#{item.createdatePro,jdbcType=TIMESTAMP},
+			#{item.prousernamePro,jdbcType=VARCHAR},
+			#{item.remarkPro,jdbcType=VARCHAR})
+		</foreach>
+	</insert> -->
+
+	<insert id="insertSelectiveBatch" parameterType="java.util.List" >
+		insert into PROJECT_TBL
+		(PROJECTID_PRO, PROJECTNAME_PRO, CREATEDATE_PRO, PROUSERNAME_PRO, REMARK_PRO)
+		 <!-- select PROJECT_TBL_SEQ.nextval, A.* FROM  -->
+		<foreach close=")" collection="list" item="item" index="index"
+			open="(" separator="union all">
+			select
+			#{item.projectidPro,jdbcType=DECIMAL},
+			#{item.projectnamePro,jdbcType=VARCHAR},
+			#{item.createdatePro,jdbcType=TIMESTAMP},
+			#{item.prousernamePro,jdbcType=VARCHAR},
+			#{item.remarkPro,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+  
+  <!-- <insert id="insertBatch">  
+        <selectKey keyProperty="id" resultType="Long" order="AFTER">  
+            select seq_black_list.nextval as id from dual  
+        </selectKey>  
+        insert into black_list  
+        (id,uuid,type,value,delete_flag,gmt_create,gmt_modified)  
+        select seq_black_list.nextval, A.* FROM (  
+        <foreach collection="list" item="item" index="index"  
+            separator="union all">  
+            select  
+            #{item.uuid,jdbcType=VARCHAR},  
+            #{item.type,jdbcType=VARCHAR},  
+            #{item.value,jdbcType=VARCHAR},  
+            #{item.deleteFlag,jdbcType=INTEGER},  
+            #{item.gmtCreate,jdbcType=DATE},  
+            #{item.gmtModified,jdbcType=DATE}  
+            from  
+            dual  
+        </foreach>  
+        ) A  
+    </insert>  --> 
+  
+  <select id="countByExample" parameterType="com.ywjs.model.entity.ProjectExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Nov 11 17:29:10 CST 2019.
+    -->
+    select count(*) from PROJECT_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Nov 11 17:29:10 CST 2019.
+    -->
+    update PROJECT_TBL
+    <set >
+      <if test="record.projectidPro != null" >
+        PROJECTID_PRO = #{record.projectidPro,jdbcType=DECIMAL},
+      </if>
+      <if test="record.projectnamePro != null" >
+        PROJECTNAME_PRO = #{record.projectnamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdatePro != null" >
+        CREATEDATE_PRO = #{record.createdatePro,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prousernamePro != null" >
+        PROUSERNAME_PRO = #{record.prousernamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarkPro != null" >
+        REMARK_PRO = #{record.remarkPro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PROJECT_TBL
+    set PROJECTID_PRO = #{record.projectidPro,jdbcType=DECIMAL},
+      PROJECTNAME_PRO = #{record.projectnamePro,jdbcType=VARCHAR},
+      CREATEDATE_PRO = #{record.createdatePro,jdbcType=TIMESTAMP},
+      PROUSERNAME_PRO = #{record.prousernamePro,jdbcType=VARCHAR},
+      REMARK_PRO = #{record.remarkPro,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.Project" >
+    update PROJECT_TBL
+    <set >
+      <if test="projectnamePro != null" >
+        PROJECTNAME_PRO = #{projectnamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="createdatePro != null" >
+        CREATEDATE_PRO = #{createdatePro,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prousernamePro != null" >
+        PROUSERNAME_PRO = #{prousernamePro,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkPro != null" >
+        REMARK_PRO = #{remarkPro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROJECTID_PRO = #{projectidPro,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.Project" >
+    update PROJECT_TBL
+    set PROJECTNAME_PRO = #{projectnamePro,jdbcType=VARCHAR},
+      CREATEDATE_PRO = #{createdatePro,jdbcType=TIMESTAMP},
+      PROUSERNAME_PRO = #{prousernamePro,jdbcType=VARCHAR},
+      REMARK_PRO = #{remarkPro,jdbcType=VARCHAR}
+    where PROJECTID_PRO = #{projectidPro,jdbcType=DECIMAL}
+  </update>
+</mapper>

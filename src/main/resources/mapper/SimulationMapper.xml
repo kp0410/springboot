@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.SimulationMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.Simulation" >
+    <id column="SIMULATIONID_SIM" property="simulationidSim" jdbcType="DECIMAL" />
+    <result column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="DECIMAL" />
+    <result column="SIMULATIONNAME_SIM" property="simulationnameSim" jdbcType="VARCHAR" />
+    <result column="SIMSOURCE_SIM" property="simsourceSim" jdbcType="VARCHAR" />
+    <result column="SIMUSERNAME_SIM" property="simusernameSim" jdbcType="VARCHAR" />
+    <result column="CREATEDATE_SIM" property="createdateSim" jdbcType="TIMESTAMP" />
+    <result column="REMARK_SIM" property="remarkSim" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SIMULATIONID_SIM, PROJECTID_PROAFF, SIMULATIONNAME_SIM, SIMSOURCE_SIM, SIMUSERNAME_SIM, 
+    CREATEDATE_SIM, REMARK_SIM
+  </sql>
+
+  <!--手动添加sql:查询最后一条记录  -->
+  <select id="selectMax" resultType="com.ywjs.model.entity.Simulation" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM
+      SIMULATION_TBL
+    WHERE
+    SIMULATIONID_SIM = (
+      SELECT MAX(SIMULATIONID_SIM) FROM SIMULATION_TBL
+    )
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.SimulationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SIMULATION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SIMULATION_TBL
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SIMULATION_TBL
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.SimulationExample" >
+    delete from SIMULATION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.Simulation" >
+    insert into SIMULATION_TBL (SIMULATIONID_SIM, PROJECTID_PROAFF, 
+      SIMULATIONNAME_SIM, SIMSOURCE_SIM, SIMUSERNAME_SIM, 
+      CREATEDATE_SIM, REMARK_SIM)
+    values (#{simulationidSim,jdbcType=DECIMAL}, #{projectidProaff,jdbcType=DECIMAL}, 
+      #{simulationnameSim,jdbcType=VARCHAR}, #{simsourceSim,jdbcType=VARCHAR}, #{simusernameSim,jdbcType=VARCHAR}, 
+      #{createdateSim,jdbcType=TIMESTAMP}, #{remarkSim,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.Simulation" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="simulationidSim">
+      select max(SIMULATIONID_SIM) from SIMULATION_TBL
+    </selectKey>
+    insert into SIMULATION_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="simulationidSim != null" >
+        SIMULATIONID_SIM,
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF,
+      </if>
+      <if test="simulationnameSim != null" >
+        SIMULATIONNAME_SIM,
+      </if>
+      <if test="simsourceSim != null" >
+        SIMSOURCE_SIM,
+      </if>
+      <if test="simusernameSim != null" >
+        SIMUSERNAME_SIM,
+      </if>
+      <if test="createdateSim != null" >
+        CREATEDATE_SIM,
+      </if>
+      <if test="remarkSim != null" >
+        REMARK_SIM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="simulationidSim != null" >
+        #{simulationidSim,jdbcType=DECIMAL},
+      </if>
+      <if test="projectidProaff != null" >
+        #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="simulationnameSim != null" >
+        #{simulationnameSim,jdbcType=VARCHAR},
+      </if>
+      <if test="simsourceSim != null" >
+        #{simsourceSim,jdbcType=VARCHAR},
+      </if>
+      <if test="simusernameSim != null" >
+        #{simusernameSim,jdbcType=VARCHAR},
+      </if>
+      <if test="createdateSim != null" >
+        #{createdateSim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkSim != null" >
+        #{remarkSim,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.SimulationExample" resultType="java.lang.Integer" >
+    select count(*) from SIMULATION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SIMULATION_TBL
+    <set >
+      <if test="record.simulationidSim != null" >
+        SIMULATIONID_SIM = #{record.simulationidSim,jdbcType=DECIMAL},
+      </if>
+      <if test="record.projectidProaff != null" >
+        PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.simulationnameSim != null" >
+        SIMULATIONNAME_SIM = #{record.simulationnameSim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simsourceSim != null" >
+        SIMSOURCE_SIM = #{record.simsourceSim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simusernameSim != null" >
+        SIMUSERNAME_SIM = #{record.simusernameSim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdateSim != null" >
+        CREATEDATE_SIM = #{record.createdateSim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remarkSim != null" >
+        REMARK_SIM = #{record.remarkSim,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SIMULATION_TBL
+    set SIMULATIONID_SIM = #{record.simulationidSim,jdbcType=DECIMAL},
+      PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      SIMULATIONNAME_SIM = #{record.simulationnameSim,jdbcType=VARCHAR},
+      SIMSOURCE_SIM = #{record.simsourceSim,jdbcType=VARCHAR},
+      SIMUSERNAME_SIM = #{record.simusernameSim,jdbcType=VARCHAR},
+      CREATEDATE_SIM = #{record.createdateSim,jdbcType=TIMESTAMP},
+      REMARK_SIM = #{record.remarkSim,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.Simulation" >
+    update SIMULATION_TBL
+    <set >
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="simulationnameSim != null" >
+        SIMULATIONNAME_SIM = #{simulationnameSim,jdbcType=VARCHAR},
+      </if>
+      <if test="simsourceSim != null" >
+        SIMSOURCE_SIM = #{simsourceSim,jdbcType=VARCHAR},
+      </if>
+      <if test="simusernameSim != null" >
+        SIMUSERNAME_SIM = #{simusernameSim,jdbcType=VARCHAR},
+      </if>
+      <if test="createdateSim != null" >
+        CREATEDATE_SIM = #{createdateSim,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarkSim != null" >
+        REMARK_SIM = #{remarkSim,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.Simulation" >
+    update SIMULATION_TBL
+    set PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      SIMULATIONNAME_SIM = #{simulationnameSim,jdbcType=VARCHAR},
+      SIMSOURCE_SIM = #{simsourceSim,jdbcType=VARCHAR},
+      SIMUSERNAME_SIM = #{simusernameSim,jdbcType=VARCHAR},
+      CREATEDATE_SIM = #{createdateSim,jdbcType=TIMESTAMP},
+      REMARK_SIM = #{remarkSim,jdbcType=VARCHAR}
+    where SIMULATIONID_SIM = #{simulationidSim,jdbcType=DECIMAL}
+  </update>
+</mapper>

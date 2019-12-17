@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.WorkingConditionMapper" >
+  <resultMap id="BaseResultMap" type="com.ywjs.model.entity.WorkingCondition" >
+    <id column="WORKID_WORK" property="workidWork" jdbcType="DECIMAL" />
+    <result column="WORKUSERNAME_WORK" property="workusernameWork" jdbcType="VARCHAR" />
+    <result column="CREATEDATE_WORK" property="createdateWork" jdbcType="TIMESTAMP" />
+    <result column="WORKTYPE_WORK" property="worktypeWork" jdbcType="DECIMAL" />
+    <result column="ISACQUIESCE_WORK" property="isacquiesceWork" jdbcType="DECIMAL" />
+    <result column="REMARK_PROAFF" property="remarkProaff" jdbcType="VARCHAR" />
+    <result column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="DECIMAL" />
+    <result column="WORKNAME_WORK" property="worknameWork" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WORKID_WORK, WORKUSERNAME_WORK, CREATEDATE_WORK, WORKTYPE_WORK, ISACQUIESCE_WORK, 
+    REMARK_PROAFF, PROJECTID_PROAFF, WORKNAME_WORK
+  </sql>
+
+  <select id="selectAllToWorkVO" resultType="com.ywjs.model.vo.WorkVO">
+      select WORKID_WORK as workid,WORKNAME_WORK as workname,PROJECTID_PROAFF as projectaffid from WORKINGCONDITION_TBL
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ywjs.model.entity.WorkingConditionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from WORKINGCONDITION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from WORKINGCONDITION_TBL
+    where WORKID_WORK = #{workidWork,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from WORKINGCONDITION_TBL
+    where WORKID_WORK = #{workidWork,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ywjs.model.entity.WorkingConditionExample" >
+    delete from WORKINGCONDITION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ywjs.model.entity.WorkingCondition" >
+    <!-- WORKINGCONDITION_TBL_SEQ.currval  -->
+    <selectKey resultType="Long" order="AFTER" keyProperty="workidWork">
+     	<!-- select WORKINGCONDITION_TBL_SEQ.nextval  from dual -->
+     	select max(WORKID_WORK) from WORKINGCONDITION_TBL
+    </selectKey>
+    insert into WORKINGCONDITION_TBL (WORKID_WORK, WORKUSERNAME_WORK, CREATEDATE_WORK, 
+      WORKTYPE_WORK, ISACQUIESCE_WORK, REMARK_PROAFF, 
+      PROJECTID_PROAFF, WORKNAME_WORK)
+    values (#{workidWork,jdbcType=DECIMAL}, #{workusernameWork,jdbcType=VARCHAR}, #{createdateWork,jdbcType=TIMESTAMP}, 
+      #{worktypeWork,jdbcType=DECIMAL}, #{isacquiesceWork,jdbcType=DECIMAL}, #{remarkProaff,jdbcType=VARCHAR}, 
+      #{projectidProaff,jdbcType=DECIMAL}, #{worknameWork,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ywjs.model.entity.WorkingCondition" >
+    <selectKey resultType="Long" order="AFTER" keyProperty="workidWork">
+     	select max(WORKID_WORK) from WORKINGCONDITION_TBL
+    </selectKey>
+    insert into WORKINGCONDITION_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workidWork != null" >
+        WORKID_WORK,
+      </if>
+      <if test="workusernameWork != null" >
+        WORKUSERNAME_WORK,
+      </if>
+      <if test="createdateWork != null" >
+        CREATEDATE_WORK,
+      </if>
+      <if test="worktypeWork != null" >
+        WORKTYPE_WORK,
+      </if>
+      <if test="isacquiesceWork != null" >
+        ISACQUIESCE_WORK,
+      </if>
+      <if test="remarkProaff != null" >
+        REMARK_PROAFF,
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF,
+      </if>
+      <if test="worknameWork != null" >
+        WORKNAME_WORK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workidWork != null" >
+        #{workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="workusernameWork != null" >
+        #{workusernameWork,jdbcType=VARCHAR},
+      </if>
+      <if test="createdateWork != null" >
+        #{createdateWork,jdbcType=TIMESTAMP},
+      </if>
+      <if test="worktypeWork != null" >
+        #{worktypeWork,jdbcType=DECIMAL},
+      </if>
+      <if test="isacquiesceWork != null" >
+        #{isacquiesceWork,jdbcType=DECIMAL},
+      </if>
+      <if test="remarkProaff != null" >
+        #{remarkProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="projectidProaff != null" >
+        #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="worknameWork != null" >
+        #{worknameWork,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ywjs.model.entity.WorkingConditionExample" resultType="java.lang.Long" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Nov 14 18:04:50 CST 2019.
+    -->
+    select count(*) from WORKINGCONDITION_TBL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Nov 14 18:04:50 CST 2019.
+    -->
+    update WORKINGCONDITION_TBL
+    <set >
+      <if test="record.workidWork != null" >
+        WORKID_WORK = #{record.workidWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.workusernameWork != null" >
+        WORKUSERNAME_WORK = #{record.workusernameWork,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdateWork != null" >
+        CREATEDATE_WORK = #{record.createdateWork,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.worktypeWork != null" >
+        WORKTYPE_WORK = #{record.worktypeWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isacquiesceWork != null" >
+        ISACQUIESCE_WORK = #{record.isacquiesceWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarkProaff != null" >
+        REMARK_PROAFF = #{record.remarkProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectidProaff != null" >
+        PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.worknameWork != null" >
+        WORKNAME_WORK = #{record.worknameWork,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Nov 14 18:04:50 CST 2019.
+    -->
+    update WORKINGCONDITION_TBL
+    set WORKID_WORK = #{record.workidWork,jdbcType=DECIMAL},
+      WORKUSERNAME_WORK = #{record.workusernameWork,jdbcType=VARCHAR},
+      CREATEDATE_WORK = #{record.createdateWork,jdbcType=TIMESTAMP},
+      WORKTYPE_WORK = #{record.worktypeWork,jdbcType=DECIMAL},
+      ISACQUIESCE_WORK = #{record.isacquiesceWork,jdbcType=DECIMAL},
+      REMARK_PROAFF = #{record.remarkProaff,jdbcType=VARCHAR},
+      PROJECTID_PROAFF = #{record.projectidProaff,jdbcType=DECIMAL},
+      WORKNAME_WORK = #{record.worknameWork,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ywjs.model.entity.WorkingCondition" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Nov 14 18:04:50 CST 2019.
+    -->
+    update WORKINGCONDITION_TBL
+    <set >
+      <if test="workusernameWork != null" >
+        WORKUSERNAME_WORK = #{workusernameWork,jdbcType=VARCHAR},
+      </if>
+      <if test="createdateWork != null" >
+        CREATEDATE_WORK = #{createdateWork,jdbcType=TIMESTAMP},
+      </if>
+      <if test="worktypeWork != null" >
+        WORKTYPE_WORK = #{worktypeWork,jdbcType=DECIMAL},
+      </if>
+      <if test="isacquiesceWork != null" >
+        ISACQUIESCE_WORK = #{isacquiesceWork,jdbcType=DECIMAL},
+      </if>
+      <if test="remarkProaff != null" >
+        REMARK_PROAFF = #{remarkProaff,jdbcType=VARCHAR},
+      </if>
+      <if test="projectidProaff != null" >
+        PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      </if>
+      <if test="worknameWork != null" >
+        WORKNAME_WORK = #{worknameWork,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WORKID_WORK = #{workidWork,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ywjs.model.entity.WorkingCondition" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Nov 14 18:04:50 CST 2019.
+    -->
+    update WORKINGCONDITION_TBL
+    set WORKUSERNAME_WORK = #{workusernameWork,jdbcType=VARCHAR},
+      CREATEDATE_WORK = #{createdateWork,jdbcType=TIMESTAMP},
+      WORKTYPE_WORK = #{worktypeWork,jdbcType=DECIMAL},
+      ISACQUIESCE_WORK = #{isacquiesceWork,jdbcType=DECIMAL},
+      REMARK_PROAFF = #{remarkProaff,jdbcType=VARCHAR},
+      PROJECTID_PROAFF = #{projectidProaff,jdbcType=DECIMAL},
+      WORKNAME_WORK = #{worknameWork,jdbcType=VARCHAR}
+    where WORKID_WORK = #{workidWork,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywjs.mapper.CustomMapper" >
+  <!-- 自定义mapper，用于编写复杂类型查询 -->
+	<resultMap type="com.ywjs.model.vo.SimulationlistVO" id="selectJointMap">
+				<result column="PROJECTID_PRO" property="projectidPro" jdbcType="DECIMAL" />
+				<result column="PROJECTNAME_PRO" property="projectnamePro" jdbcType="VARCHAR" />
+			    <result column="PROJECTID_PROAFF" property="projectidProaff" jdbcType="DECIMAL" />
+			    <result column="CREATEDATE_PROAFF" property="createdateProaff" jdbcType="TIMESTAMP" />
+				<result column="SIMULATIONID_SIM" property="simulationidSim" jdbcType="DECIMAL" />
+			    <result column="SIMULATIONNAME_SIM" property="simulationnameSim" jdbcType="VARCHAR" />
+			    <result column="SIMSOURCE_SIM" property="simsourceSim" jdbcType="VARCHAR" />
+			    <result column="SIMUSERNAME_SIM" property="simusernameSim" jdbcType="VARCHAR" />
+			    <result column="CREATEDATE_SIM" property="createdateSim" jdbcType="TIMESTAMP" />
+			    <result column="REMARK_SIM" property="remarkSim" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectJointSimulation" resultMap="selectJointMap" parameterType="java.util.HashMap">
+		SELECT
+			a.PROJECTID_PRO,a.PROJECTNAME_PRO,b.PROJECTID_PROAFF,b.CREATEDATE_PROAFF,
+			c.SIMULATIONNAME_SIM,c.SIMSOURCE_SIM,c.CREATEDATE_SIM,c.REMARK_SIM
+			
+		FROM
+			PROJECT_TBL a,
+			PROJECT_AFFILIATED_TBL b,
+			SIMULATION_TBL c
+		WHERE
+			a.PROJECTID_PRO = b.PROJECTID_PRO
+			AND b.PROJECTID_PROAFF = c.PROJECTID_PROAFF
+			<if test="id != null" >
+			AND a.PROJECTID_PRO = #{id}
+			<!-- <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> -->
+			</if>
+	</select>
+	
+	<select id="selectSimulationByAffId" resultMap="selectJointMap" parameterType="java.lang.Long">
+		SELECT
+			a.PROJECTID_PRO,a.PROJECTNAME_PRO,b.PROJECTID_PROAFF,b.CREATEDATE_PROAFF,c.SIMULATIONID_SIM,
+			c.SIMULATIONNAME_SIM,c.SIMSOURCE_SIM,c.CREATEDATE_SIM,c.REMARK_SIM
+			
+		FROM
+			PROJECT_TBL a,
+			PROJECT_AFFILIATED_TBL b,
+			SIMULATION_TBL c
+		WHERE
+			a.PROJECTID_PRO = b.PROJECTID_PRO
+			AND b.PROJECTID_PROAFF = c.PROJECTID_PROAFF
+			AND b.PROJECTID_PROAFF = #{0}
+	</select>
+
+	<resultMap id="GetProjectandAffandWorkVOMap" type="com.ywjs.model.vo.GetProjectandAffandWorkVO">
+		<collection property="projectlist" ofType="com.ywjs.model.vo.ProjectVO" >
+			<result column="PROJECTID_PRO" property="projectid" jdbcType="BIGINT"></result>
+			<result column="PROJECTNAME_PRO" property="projectname" jdbcType="VARCHAR"></result>
+		</collection>
+		<collection property="projectafflist" ofType="com.ywjs.model.vo.ProjectaffVO" >
+			<result column="PROJECTID_PROAFF" property="projectaffid" jdbcType="BIGINT"></result>
+			<result column="PROJECTID_PRO" property="projectid" jdbcType="BIGINT"></result>
+		</collection>
+		<collection property="worklist" ofType="com.ywjs.model.vo.WorkVO" >
+			<result column="WORKID_WORK" property="workid" jdbcType="BIGINT"></result>
+			<result column="WORKNAME_WORK" property="workname" jdbcType="VARCHAR"></result>
+			<result column="PROJECTID_PROAFF" property="projectaffid" jdbcType="BIGINT"></result>
+		</collection>
+	</resultMap>
+	<select id="getProjectandAffandWorkVO" resultMap="GetProjectandAffandWorkVOMap">
+		SELECT
+			a.PROJECTID_PRO,a.PROJECTNAME_PRO,
+			b.PROJECTID_PRO,b.PROJECTID_PROAFF,
+		   c.WORKID_WORK,c.PROJECTID_PROAFF,c.WORKNAME_WORK
+		FROM
+			PROJECT_TBL a
+		LEFT JOIN PROJECT_AFFILIATED_TBL b ON a.PROJECTID_PRO = b.PROJECTID_PRO
+		LEFT JOIN WORKINGCONDITION_TBL c ON b.PROJECTID_PROAFF = c.PROJECTID_PROAFF
+	</select>
+
+	<delete id="deleteAllRealtimesimResult">
+		delete from REALTIMESIM_RESULT_TBL
+	</delete>
+
+</mapper>
